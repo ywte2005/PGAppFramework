@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>扑谷网</title>
+	<link rel="stylesheet" type="text/css" href="css/icons.css" /> 
+	<link rel="stylesheet" type="text/css" href="css/af.ui.css" />
+	<link rel="stylesheet" type="text/css" href="plugins/css/af.scroller.css"  />
+	<script type="text/javascript" charset="utf-8" src="./appframework.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./ui/appframework.ui.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./plugins/af.touchEvents.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./plugins/af.touchLayer.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./plugins/af.scroller.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./plugins/af.css3animate.js"></script>
+	<script type="text/javascript" charset="utf-8" src="./plugins/af.slidemenu.js"></script>
+	<script>
+	    $.ui.ready(function(){
+	    	$('#navbar').remove();
+	    });
+	</script>
+    <!-- include af.desktopBrowsers.js on desktop browsers only -->
+    <script>
+
+        function loadedPanel(what) {
+            console.log("loaded " + what.id);
+        }
+
+
+        function unloadedPanel(what) {
+            console.log("unloaded " + what.id);
+        }
+
+        if (!((window.DocumentTouch && document instanceof DocumentTouch) || 'ontouchstart' in window)) {
+            var script = document.createElement("script");
+            script.src = "plugins/af.desktopBrowsers.js";
+            var tag = $("head").append(script);
+            //$.os.desktop=true;
+        }
+
+      //  $.feat.nativeTouchScroll=true;
+      
+    </script>        
+</head>
+<body>
+	<div id="afui">
+	    <nav>
+	        <ul class="list">
+	            <li><a class="icon paper" href="#news">新闻</a></li>
+	            <li><a class="icon heart" href="#heart">订阅</a></li>
+	            <li><a class="icon picture" href="#picture">图片</a></li>
+	            <li><a class="icon tv" href="#video">视频</a></li>
+	            <li><a class="icon message" href="#message">跟贴</a></li>
+	            <li><a class="icon graph" href="#graph">投票</a></li>
+	        </ul>
+	    </nav>
+        <div id="header"> 
+        	<a class="button icon folder big" onclick='af.ui.toggleSideMenu()' style="float:left"></a>
+            <a class="button icon user big" onclick='af.ui.toggleRightSideMenu()' style="float:right"></a>
+        </div>
+	    <div id="content">
+	    	<div title='main' id="main" class="panel" data-load="loadedPanel" selected="true" data-unload="unloadedPanel">
+	    		<h1>main</h1>
+	    		<br /><br /><br />
+	    		<br /><br /><br />
+	    		<br /><br /><br />
+	    		<br /><br /><br />
+	    		<br /><br /><br />
+	    		<br /><br /><br />
+	    		<br /><br /><br />
+	    		<br /><br /><br />
+	    		<br /><br /><br />
+	    		<br /><br /><br />
+	    		<br /><br /><br />
+	    		<br /><br /><br />
+	    		<br /><br /><br />
+	    	</div>
+	    </div>
+	    <aside>
+	        广告与登录<br />
+	        ++++++++++<br />
+	        置顶公告<br />
+	        ++++++++++<br />
+	        快捷菜单<br />
+	        ++++++++++<br />
+	        设置与版本
+	    </aside>
+	</div>
+</body>
+</html>

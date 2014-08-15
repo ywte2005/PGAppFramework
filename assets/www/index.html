@@ -1,0 +1,2530 @@
+﻿<!DOCTYPE html>
+<!--HTML5 doctype-->
+<html>
+
+    <head>
+        <script>
+        (function() {
+    if ("-ms-user-select" in document.documentElement.style && navigator.userAgent.match(/IEMobile\/10\.0/)) {
+        var msViewportStyle = document.createElement("style");
+        msViewportStyle.appendChild(
+            document.createTextNode("@-ms-viewport{width:auto!important}")
+        );
+        document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
+    }
+})();
+</script>
+
+        <title>App Framework Kitchen Sink</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="stylesheet" type="text/css" href="css/icons.css" />    
+ 
+       <!--   
+     <link rel="stylesheet" type="text/css" href="css/af.ui.css" title="default" />
+  -->
+      <link rel="stylesheet" type="text/css" href="css/main.css"  />
+      <link rel="stylesheet" type="text/css" href="css/appframework.css"  />
+      <link rel="stylesheet" type="text/css" href="css/lists.css"  />
+      <link rel="stylesheet" type="text/css" href="css/forms.css"  />
+      <link rel="stylesheet" type="text/css" href="css/buttons.css"  />        
+      <link rel="stylesheet" type="text/css" href="css/badges.css"  />        
+      <link rel="stylesheet" type="text/css" href="css/grid.css"  />
+
+      <link rel="stylesheet" type="text/css" href="css/android.css"  />
+      <link rel="stylesheet" type="text/css" href="css/win8.css"  />
+      <link rel="stylesheet" type="text/css" href="css/bb.css"  />
+      <link rel="stylesheet" type="text/css" href="css/ios.css"  />
+      <link rel="stylesheet" type="text/css" href="css/ios7.css"  />
+      <link rel="stylesheet" type="text/css" href="css/tizen.css"  />
+
+      <link rel="stylesheet" type="text/css" href="css/b.css"  />
+        
+      <link rel="stylesheet" type="text/css" href="plugins/css/af.actionsheet.css"  />
+      <link rel="stylesheet" type="text/css" href="plugins/css/af.popup.css"  />
+      <link rel="stylesheet" type="text/css" href="plugins/css/af.scroller.css"  />
+      <link rel="stylesheet" type="text/css" href="plugins/css/af.selectBox.css"  />        
+        
+        <!-- 注释 intel.xdk 脚本 
+        <script type="text/javascript" charset="utf-8" src="intelxdk.js"></script>
+        <script type="text/javascript" charset="utf-8" src="xhr.js"></script>
+        -->
+        <script type="text/javascript" charset="utf-8" src="./appframework.js"></script>
+        <!-- 引入浏览器桌面处理脚本 af.desktopBrowsers.js -->
+        <script>
+
+            function loadedPanel(what) {
+                //更新li的数量到badge显示
+                $.ui.updateBadge("#aflink", $("#af").find("li").length);
+            }
+
+
+            function unloadedPanel(what) {
+                console.log("unloaded " + what.id);
+            }
+
+            if (!((window.DocumentTouch && document instanceof DocumentTouch) || 'ontouchstart' in window)) {
+                var script = document.createElement("script");
+                script.src = "plugins/af.desktopBrowsers.js";
+                var tag = $("head").append(script);
+                //$.os.desktop=true;
+            }
+
+          //  $.feat.nativeTouchScroll=true;
+          
+        </script>        
+        <script type="text/javascript" charset="utf-8" src="./plugins/af.actionsheet.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./plugins/af.css3animate.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./plugins/af.passwordBox.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./build/iscroll.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./plugins/af.selectBox.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./plugins/af.touchEvents.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./plugins/af.touchLayer.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./plugins/af.popup.js"></script>
+
+        <script type="text/javascript" charset="utf-8" src="./ui/appframework.ui.js"></script>
+        <!-- <script type="text/javascript" charset="utf-8" src="./ui/transitions/all.js"></script> -->
+        <script type="text/javascript" charset="utf-8" src="./ui/transitions/fade.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./ui/transitions/flip.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./ui/transitions/pop.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./ui/transitions/slide.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./ui/transitions/slideDown.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./ui/transitions/slideUp.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./plugins/af.slidemenu.js"></script>
+        
+
+        <script type="text/javascript">
+            /* 这个函数在页面加载运行一次,未引入intel.xdk脚本情况下 */
+            //$.ui.animateHeaders=false;
+             var search=document.location.search.toLowerCase().replace("?","");
+             //if(!search)
+            $.ui.useOSThemes=true;
+            if(search.length>0) //如果search参数存在则设置当前主题,否则使用默认皮肤
+            {
+
+               $.ui.useOSThemes=true;
+                if(search=="win8")
+                    $.os.ie=true;
+                $.ui.ready(function(){
+                    $("#afui").get(0).className=search;
+                });
+            }
+            var webRoot = "./";
+            // $.os.android=true;
+            //$.ui.autoLaunch = false;
+            $.ui.openLinksNewTab = false;
+            $.ui.splitview=false;
+            
+
+            $(document).ready(function(){
+                  // $.ui.launch();
+
+            });
+            
+            /* 这段是来运行intel.xdk的代码  */
+            var onDeviceReady = function () {
+                intel.xdk.device.setRotateOrientation("portrait");
+                intel.xdk.device.setAutoRotate(false);
+                webRoot = intel.xdk.webRoot + "";
+                //隐藏启动画面
+                intel.xdk.device.hideSplashScreen();
+                $.ui.blockPageScroll(); //阻止页面,滚动页眉/页脚
+            };
+            document.addEventListener("intel.xdk.device.ready", onDeviceReady, false);
+
+            function showHide(obj, objToHide) {
+                var el = $("#" + objToHide)[0];
+
+                if (obj.className == "expanded") {
+                    obj.className = "collapsed";
+                } else {
+                    obj.className = "expanded";
+                }
+                $(el).toggle();
+
+            }
+
+
+            if($.os.android||$.os.ie||search=="android"){
+                $.ui.ready(function(){
+                    $("#main .list").append("<li><a id='toggleAndroidTheme'>切换主题颜色</a></li>");
+                    var $el=$("#afui");
+                    $("#toggleAndroidTheme").bind("click",function(e){
+                        if($el.hasClass("light"))
+                            $el.removeClass("light");
+                        else
+                            $el.addClass("light");
+                    });
+                });
+            }  
+
+            $.ui.ready(function(){
+                (function(){
+                    var PGAppFramework = {
+                        api:'http://d.pugu.biz/api.html',
+                        menu:function(){
+                            var me = this;
+                            me.jsonp({action:'menu',limit:'8',id:'1020'},function(result){
+                                var s = [];
+                                $.each(result,function(i,item){
+                                    s.push('<li class="divider'+(item.icon?' icon '+item.icon:'')+'">'+item.name+'</li>');
+                                    if(item.children){
+                                        $.each(item.children,function(k,children){
+                                            s.push('<li'+(children.icon?' class="icon '+children.icon+'"':'')+'>'+children.name+'</li>');
+                                        });
+                                    }
+                                });
+                                $('nav ul').empty().append(s.join(''));
+                            });
+                        },
+                        jsonp:function(data,callback){
+                            var me = this;
+                            var url = [me.api,$.param(data)];
+                            $.jsonP({
+                                url:url.join('?'),
+                                success:function(result){
+                                    callback(result)
+                                }
+                            });
+                        },
+                        start:function(){
+                            //栏目
+                            this.menu();
+                        }
+                    };
+                    PGAppFramework.start();
+                })();
+            });                
+        </script>
+
+</head>
+
+    <body>
+        <div id="afui">
+            <!-- 这里是初始化时看到的启动画面 -->
+            <div id="splashscreen" class='ui-loader heavy'>
+                AppFramework
+                <br>
+                <br>    <span class='ui-icon ui-icon-loading spin'></span>
+                <h1>正在启动应用程序...</h1>
+
+            </div>
+            <div id="header">
+                <a id='menubadge' onclick='$.ui.toggleSideMenu()' class='menuButton'></a>                 
+            </div>
+            <div id="content">
+                <div title='欢迎' id="main" class="panel" selected="true" data-load="loadedPanel" data-unload="unloadedPanel" data-tab="navbar_home">
+
+                    <h2 class='expanded' onclick='showHide(this,"main_info");'>欢迎</h2>
+
+                    <p id='main_info'>欢迎来到AppFramework框架演示。在这里你可以了解如何使用AppFramework框架的示例。请从下面选项中选择。</p>
+                    <ul class="list">
+                        <li class='red'>
+                            <a href="#af" id='aflink' class='icon home big'>选择器</a>
+                        </li>
+                        <li class="blue">
+                            <a href="#afuidemo">界面</a>
+                        </li>
+                        <li>
+                            <a href="index.html" data-ignore="true">默认主题</a>
+                        </li>
+                         <li>
+                            <a href="index.html?ios" data-ignore="true">iOS 主题</a>
+                        </li>
+                        <li>
+                            <a href="index.html?android" data-ignore="true">Android 主题</a>
+                        </li>
+                        <li>
+                            <a href="index.html?win8" data-ignore="true">Win8 主题</a>
+                        </li>
+                        <li>
+                            <a href="index.html?bb" data-ignore="true">BB10 主题</a>
+                        </li>
+                       <li>
+                            <a href="index.html?ios7" data-ignore="true">ios7 主题</a>
+                        </li>
+                         <li>
+                            <a href="index.html?tizen" data-ignore="true">tizen 主题</a>
+                        </li>
+
+
+                    </ul>
+                </div>
+                <!---------------------------------------------->
+                <div title="AppFramework" id="af" class="panel" data-nav="menu_AppFramework" data-header="testheader">
+                    <!-- <header><span>这是一个内联在板头。下面是内联页脚</span></header>-->
+                        <h2 class='expanded' onclick='showHide(this,"AppFramework_info");'>AppFramework</h2>
+
+                    <p id='AppFramework_info'>AppFramework是一个快速DOM选择器工具,HTML5浏览器运行效果最佳。</p>
+                    <ul class="list">
+                        <li>
+                            <a id="tester"  onClick="$.ui.scrollToBottom('af')" class='flipAnimation'>跳转到底部</a>
+                        </li>
+                        <li>
+                            <a href="#af1">$()</a>
+                        </li>
+                        <li>
+                            <a href="#af2">$().length()</a>
+                        </li>
+                        <li>
+                            <a href="#af3">$().find()</a>
+                        </li>
+                        <li>
+                            <a href="#af4">$().html()</a>
+                        </li>
+                        <li>
+                            <a href="#af5">$().text()</a>
+                        </li>
+                        <li>
+                            <a href="#af6">$().css()</a>
+                        </li>
+                        <li>
+                            <a href="#af7">$().empty()</a>
+                        </li>
+                        <li>
+                            <a href="#af8">$().hide()</a>
+                        </li>
+                        <li>
+                            <a href="#af9">$().show()</a>
+                        </li>
+                        <li>
+                            <a href="#af10">$().toggle()</a>
+                        </li>
+                        <li>
+                            <a href="#af11">$().val()</a>
+                        </li>
+                        <li>
+                            <a href="#af12">$().attr()</a>
+                        </li>
+                        <li>
+                            <a href="#af13">$().removeAttr()</a>
+                        </li>
+                        <li>
+                            <a href="#af14">$().remove()</a>
+                        </li>
+                        <li>
+                            <a href="#af15">$().addClass()</a>
+                        </li>
+                        <li>
+                            <a href="#af16">$().removeClass()</a>
+                        </li>
+                        <li>
+                            <a href="#af17">$().hasClass()</a>
+                        </li>
+                        <li>
+                            <a href="#af18">$().bind()</a>
+                        </li>
+                        <li>
+                            <a href="#af19">$().unbind()</a>
+                        </li>
+                        <li>
+                            <a href="#af20">$().trigger()</a>
+                        </li>
+                        <li>
+                            <a href="#af21">$().append()</a>
+                        </li>
+                        <li>
+                            <a href="#af22">$().prepend()</a>
+                        </li>
+                        <li>
+                            <a href="#af32">$().get(0)</a>
+                        </li>
+                        <li>
+                            <a href="#af31">$().offset()</a>
+                        </li>
+                        <li>
+                            <a href="#afparent">$().parent()</a>
+                        </li>
+                        <li>
+                            <a href="#afserialize">$().serialize()</a>
+                        </li>
+                        <li>
+                            <a href="#af33">$.isArray()</a>
+                        </li>
+                        <li>
+                            <a href="#af34">$.isFunction()</a>
+                        </li>
+                        <li>
+                            <a href="#af23">$.jsonP()</a>
+                        </li>
+                        <li>
+                            <a href="#af24">$.ajax()</a>
+                        </li>
+                        <li>
+                            <a href="#af25">$.get(0)</a>
+                        </li>
+                        <li>
+                            <a href="#af26">$.post()</a>
+                        </li>
+                        <li>
+                            <a href="#af27">$.getJSON()</a>
+                        </li>
+                        <li>
+                            <a href="#af28">$.param()</a>
+                        </li>
+                        <li>
+                            <a href="#af29">$.parseJSON()</a>
+                        </li>
+                        <li>
+                            <a href="#af30">$.os</a>
+                        </li>
+                        <li>
+                            <a  onClick="$.ui.scrollToTop('af')">跳转到顶部</a>
+                        </li>
+                    </ul>
+                    <footer>
+                        <a href="#main" id='navbar_home' class='icon home'>首页 <span class='af-badge lr'>12</span>
+                        </a>
+                    </footer>
+                </div>
+                <div id="afserialize" class="panel" title="$().serialize" data-nav="menu_AppFramework">
+                    <script>
+                        function serializeForm() {
+                            alert($("#form").serialize());
+                        }
+                    </script>$("#form").serialize() - 序列化表单内容为字符串。
+                    <br>
+                    <Br>
+                    <form id="form" onsubmit="return false">名称:
+                        <input type='text' class='af-ui-forms' name='name' value='John Smith'>
+                        <br>
+                        <input type='checkbox' class='af-ui-forms' value='yes' checked name='human'>
+                        <label for='human'>你是人类?</label>
+                        <br>
+                        <br>性别: <span><select id='serialize_gender' name="gender"><option value='0'>男</option><option value='女'>1</option><select></span>
+                        <br>
+                        <br>
+                        <br>
+                        <input type="button" onclick="serializeForm()" value="Serialize">
+                    </form>
+                </div>
+                <!-- af> af Selector -->
+                <div id="af1" class="panel" title="$()" data-nav="menu_AppFramework">   <span id="aftest2">我是#aftest2，没有什么内容可以给你看。。。</span>
+                    <br />
+                    <br />
+                    <a class="button"  onclick="alert($('#aftest2')[0])">单击获取#aftest2对象</a>
+                    <br />
+                    <br />
+                    <a class="button"  onclick="alert($('#aftest2').html())">单击获取#aftest2内容</a>
+                </div>
+                <!-- af> af length() -->
+                <div id="af2" class="panel" title=".length()" data-nav="menu_AppFramework">
+                    <div class='af2'>Div 1 (样式:af2)</div>
+                    <div class='af2'>Div 2 (样式:af2)</div>
+                    <div class='af2'>Div 3 (样式:af2)</div>
+                    <div class='af4'>Div 4 (样式:af4)</div>
+                    <br />
+                    <a class="button"  onclick="alert($('.af2').length)">单击获取使用af2样式的所有div数量</a>
+                </div>
+                <!-- af> af find() -->
+                <div id="af3" class="panel" title=".find()" data-nav="menu_AppFramework">$("#div").find("li") 获取所有#div里面的所有li元素集合
+                    <br />
+                    <br />
+                    <ul class="list">
+                        <li id='find1'>我是af3里面的第一条li记录</li>
+                        <li>我是af3里面的第二条li记录</li>
+                    </ul>
+                    <a class="button"  onclick="alert($('#af3').find('li').length)">单击获取所有#af3里面的所有li元素数量</a>
+                    <br />
+                    <br />
+                </div>
+                <!-- af> af html() -->
+                <div id="af4" class="panel" title=".html()" data-nav="menu_AppFramework">$("#div").html() 获取/设置 >> #div的HTML.
+                    <br />
+                    <br />
+                    <div id="af4_content" style='border:1px solid black'>我是#af4_content，没有什么可以显示的内容。。。</div>
+                    <br />
+                    <br />
+                    <a class="button"  onclick='alert($("#af4_content").html())'>单击获取#af4_content的内容</a>|
+                    <a  class="button" onclick='$("#af4_content").html("啊,终于到我出场了")'>单击设置#af4_content的内容</a>
+                </div>
+                <!-- af> af text() -->
+                <div id="af5" class="panel" title=".text()" data-nav="menu_AppFramework">$("#div").text() 获取/设置 >> #div的文本.
+                    <br />
+                    <br />
+                    <div id="af5_content" style='border:1px solid black'><span>我是#af5_content的文本内容。。</span> 我也是#af5_content的文本内容,但是我不在span标签里面</div>
+                    <br />
+                    <br />
+                    <a class="button"  onclick='alert($("#af5_content").text())'>单击获取#af5_content的文本</a>|
+                    <a class="button"  onclick='$("#af5_content").text("我是文本君。。")'>单击设置#af5_content的文本</a>
+                </div>
+                <!-- af> af css() -->
+                <div id="af6" class="panel" title=".css()" data-nav="menu_AppFramework">$("#div").css() - 获取/设置 >> #div的样式.
+                    <br />
+                    <br />
+                    <div style="background:red;color:white;border:1px solid black" id="af6_content">我是#af6_content的文本内容,背景是红的。。</div>
+                    <br />
+                    <br />
+                    <a class="button"  onclick='alert($("#af6_content").css("background"))'>单击获取#af6_content的背景</a>
+                    <br />
+                    <a class="button"  onclick='$("#af6_content").css("background","green")'>单击设置#af6_content的背景为绿色</a>
+                </div>
+                <!-- af> af empty() -->
+                <div id="af7" class="panel" title=".empty()" data-nav="menu_AppFramework">$("#div").empty() - 清空#div里面的所有元素
+                    <br />
+                    <br />
+                    <div id="af7_content" style="border:1px solid black">我是#af7_content的内容，不想被清空。。</div>
+                    <br/>
+                    <br/>
+                    <a class="button"  onclick='$("#af7_content").empty()'>单击清空#af7_content里面的所有元素</a>
+                </div>
+                <!-- af> af hide() -->
+                <div id="af8" class="panel" title=".hide()" data-nav="menu_AppFramework">$("#div").hide() - 隐藏#div元素
+                    <br />
+                    <br />
+                    <div id="af8_content" style="border:1px solid black">我是#af8_content文本君，刚出场就要被隐藏。。</div>
+                    <br/>
+                    <a class="button"  onclick='$("#af8_content").hide()'>单击隐藏#af8_content元素</a>
+                </div>
+                <!-- af> af show() -->
+                <div id="af9" class="panel" title=".show()" data-nav="menu_AppFramework">$("#div").show() - 显示#div元素
+                    <br />
+                    <br />
+                    <div id="af9_content" style="border:1px solid black;display:none;">我是#af9_content，不想被隐藏。。</div>
+                    <br/>
+                    <a class="button"  onclick='$("#af9_content").show()'>点击显示#af9_content元素</a>
+                </div>
+                <!-- af> af toggle() -->
+                <div id="af10" class="panel" title=".toggle()" data-nav="menu_AppFramework">$("#div").toggle() - 切换#div元素的可见状态
+                    <br />
+                    <br />
+                    <div id="af10_content" style="border:1px solid black;display:block;">#af10_content在此,或隐或现。。。。</div>
+                    <br/>
+                    <br />
+                    <a class="button"  onclick='$("#af10_content").toggle()'>单击切换#af10_content元素显示状态</a>
+                </div>
+                <!-- af> af val() -->
+                <div id="af11" class="panel" title=".val()" data-nav="menu_AppFramework">$("#div").val() - 获取/设置#div元素的值
+                    <br />
+                    <br />
+                    <input type="text" id="af11_input" size=15>
+                    <br />
+                    <br />
+                    <a class="button"  onclick='alert($("#af11_input").val())'>获取#af11_input的值</a>
+                    <br />
+                    <a class="button"  onclick='($("#af11_input").val("占坑有理"))'>设置#af11_input的值</a>
+                </div>
+                <!-- af> af attr() -->
+                <div id="af12" class="panel" title=".attr()" data-nav="menu_AppFramework">$("#div").attr() - 获取/设置#div元素的属性值
+                    <br />
+                    <br />
+                    <div id="af12_content" data-test="武力+100">我是#af12_content,默认的data-test属性是：武力+100 </div>
+                    <br />
+                    <br />
+                    <a class="button"  onclick='alert($("#af12_content").attr("data-test"))'>单击获取#af12_content的data-test属性值</a>
+                    <br />
+                    <a class="button"  onclick='($("#af12_content").attr("data-test","武力-100"))'>单击设置#af12_content的data-test属性值</a>
+                </div>
+                <!-- af> af removeAttr() -->
+                <div id="af13" class="panel" title=".removeAttr()" data-nav="menu_AppFramework">$("#div").removeAttr() - 移除#div元素的属性值
+                    <br />
+                    <br />
+                    <div id="af13_content" data-test="武力+100">我是#af13_content,默认的data-test属性是：武力+100 </div>
+                    <br />
+                    <a class="button"  onclick='alert($("#af13_content").attr("data-test"))'>获取#af13_content的data-test属性值</a>
+                    <br />
+                    <a class="button"  onclick='($("#af13_content").removeAttr("data-test"))'>移除#af13_content的data-test属性值</a>
+                </div>
+                <!-- af> af remove() -->
+                <div id="af14" class="panel" title=".remove()" data-nav="menu_AppFramework">$("#div").remove() - 移除#div元素
+                    <br />
+                    <br />
+                    <div id="af14_content" style="border:1px solid black">我是#af14_content的内容,我将会从DOM中被移除.</div>
+                    <br />
+                    <a class="button"  onclick='$("#af14_content").remove()'>单击移除#af14_content元素</a>
+                </div>
+                <!-- af> af addClass() -->
+                <div id="af15" class="panel" title=".addClass()" data-nav="menu_AppFramework">$("#div").addClass() - 增加#div样式
+                    <br />
+                    <br />
+                    <div style='border:1px solid black' id="af15_content">我是#af15_content的内容,初始化class属性是空的。。</div>
+                    <br />
+                    <br />
+                    <a class="button"  onclick='($("#af15_content").addClass("class16"))'>单击给#af15_content增加样式</a>
+                </div>
+                <!-- af> af removeClass() -->
+                <div id="af16" class="panel" title=".removeClass()" data-nav="menu_AppFramework">$("#div").removeClass() - 移除#div样式
+                    <br />
+                    <br />
+                    <div style='border:1px solid black' id="af16_content" class="class16">我是#af16_content的内容,初始化class属性是class16。。</div>
+                    <br />
+                    <a class="button"  onclick='($("#af16_content").removeClass("class16"))'>单击移除#af16_content的样式</a>
+                </div>
+                <!-- af> af hassClass() -->
+                <div id="af17" class="panel" title=".hasClass()" data-nav="menu_AppFramework">$("#div").hassClass() - 检查#div元素中是否存在某个样式表名称,返回布尔值：真/假
+                    <br />
+                    <br />
+                    <div style='border:1px solid black' id="af17_content" class="class16">我是#af17_content的内容,初始化class属性是class16。。</div>
+                    <br />
+                    <a class="button"  onclick='alert($("#af17_content").hasClass("class16"))'>单击获取#af17_content是否存在class16</a>
+                </div>
+                <!-- af> af bind() -->
+                <div id="af18" class="panel" title=".bind()" data-nav="menu_AppFramework">$("#div").bind() - 绑定#div指定事件
+                    <br />
+                    <br />
+                    <a class="button"  id="af18_content">我是#af18_content，初始化没有任何事件</a>
+                    <br />
+                    <br />
+                    <a class="button"  onclick='$("#af18_content").bind("click",function(evt){alert("啊啊啊啊啊。。。。");});alert("我给#af18_content注册了事件");'>单击注册#af18_content事件</a>
+                    <br />
+                </div>
+                <!-- af> af unbind() -->
+                <div id="af19" class="panel" title=".unbind()" data-nav="menu_AppFramework">$("#div").unbind() - 移除#div指定事件
+                    <br />
+                    <br />
+                    <a class="button"  id="af19_content">我是#af19_content，初始化没有任何事件</a>
+                    <br />
+                    <br />
+                    <a class="button"  onclick='$("#af19_content").bind("click",function(){alert("啊啊啊啊啊。。。。");});alert("我给#af19_content注册了事件");'>单击注册#af19_content事件</a>
+                    <br />
+                    <a class="button"  onclick='$("#af19_content").unbind("click")'>单击移除#af19_content事件</a>
+                </div>
+                <!-- af> af trigger() -->
+                <div id="af20" class="panel" title=".trigger()" data-nav="menu_AppFramework">$("#div").trigger() - 触发#div指定事件
+                    <br />
+                    <br />
+                    <a id="af20_content"  onclick="alert('哈哈')">我是#af20_content，我有单击事件，点我</a>
+                    <br />
+                    <br />
+                    <a class="button"  onclick='$("#af20_content").trigger("click")'>我是酱油君，点我将触发#af20_content的单击事件</a>
+                </div>
+                <!-- af> af append() -->
+                <div id="af21" class="panel" title=".append()" data-nav="menu_AppFramework">$("#div").append() - 从#div元素内部最后的位置追加内容
+                    <br />
+                    <br />
+                    <div id="af21_content">我是#af21_content的内容，求组队<hr>
+                        <hr>
+                    </div>
+                    <br />
+                    <br />
+                    <a class="button"  onclick='$("#af21_content").append("<span>超人"+Math.random()+"已经加入。。。<br /></span>");'>单击往#af21_content元素追内容</a>
+                </div>
+                <!-- af> af prepend() -->
+                <div id="af22" class="panel" title=".prepend()" data-nav="menu_AppFramework">$("#div").prepend() - 从#div元素内容最前面的位置追加内容
+                    <br />
+                    <br />
+                    <div id="af22_content">
+                        <hr>我是#af22_content的内容，求插队</div>
+                    <br />
+                    <br />
+                    <a class="button"  onclick='$("#af22_content").prepend("<span>超人"+Math.random()+"插队了。。。<br /></span>");'>单击往#af22_content元素追内容</a>
+                </div>
+                <!-- af> af offset() -->
+                <div id="af31" class="panel" title=".offset()" data-nav="menu_AppFramework">
+                    <script>
+                        function getElementOffset() {
+                            var data = $("#af31").offset();
+                            alert("Top: " + data.top + " - Left: " + data.left);
+                        }
+                    </script>$("#div").offset() - 获取#div元素偏移量
+                    <br />
+                    <br /><br /><br /><br /><br /><br /><br /><br />
+                    <a class="button"  onclick='getElementOffset()'>单击我获取#af31偏移量</a>
+                </div>
+                <!-- af> af get(0) -->
+                <div id="af32" class="panel" title=".get(0)" data-nav="menu_AppFramework">$("#div").get(0) - 获取#div集合索引,返回原生对象
+                    <br />
+                    <br />
+                    <script>
+                        function getElementByIndex() {
+                            var obj = $(".panel").get(0);
+                            alert("第一个使用panel样式的元素是：" + obj.id);
+                        }
+                    </script>
+                    <a class="button"  onclick='getElementByIndex();'>单击点获取第一个使用panel样式的元素</a>
+                </div>
+                <!-- af> af jsonP() -->
+                <div id="af23" class="panel" title=".jsonP()" data-nav="menu_AppFramework">$.jsonP(url:"URL", success:function(){}, timeout:"1000", error:function(){} ) - 使用XMLHpttRequest调用跨域脚本
+                    <br />
+                    <br />
+                    <div id="af23_content" style="border:1px solid black;">我是#af23_content，我将被jsonP跨域脚本更改</div>
+                    <br />
+                    <br />
+                    <a class="button"  onclick="$.jsonP({url:'http://192.168.1.115:8080/?test=jsonP从西天请来的逗逼&callback=?',success:function(data){$('#af23_content').html(data.test)}});">单击开始jsonP调用</a>
+                </div>
+                <!-- af> af ajax() -->
+                <div id="af24" class="panel" title=".ajax()" data-nav="menu_AppFramework">$.ajax(url:"URL", success:function(){}, timeout:"1000", error:function(){} ) - 使用XMLHpttRequest
+                    <br />
+                    <br />
+                    <script type="text/javascript">
+                        function doAjax() {
+                            $.ajax({
+                                url: webRoot + 'ajax.html',
+                                error:function (XMLHttpRequest, textStatus, errorThrown) {
+                                    // 通常 textStatus 和 errorThrown 之中
+                                    // 只有一个会包含信息
+                                    // 调用本次AJAX请求时传递的options参数
+                                    console.log(XMLHttpRequest+textStatus+errorThrown);
+                                },
+                                success: function (data) {
+                                    $('#af24_content').html(data)
+                                }
+                            });
+                        }
+                    </script>
+                    <div id="af24_content" style="border:1px solid black;">我是#af24_content</div>
+                    <br />
+                    <br />
+                    <a class="button"  onclick="doAjax()">单击开始AJAX请求</a>
+                </div>
+                <!-- af> af get(0) -->
+                <div id="af25" class="panel" title=".get(0)" data-nav="menu_AppFramework">$.get(url:"URL", success:function(){}, timeout:"1000", error:function(){} ) - 使用XMLHpttRequest GET请求
+                    <br />
+                    <br />
+                    <script type="text/javascript">
+                        function doget() {
+                            $.get(webRoot + 'ajax.html', function (data) {
+                                $('#af25_content').html(data)
+                            });
+                        }
+                    </script>
+                    <div id="af25_content" style="border:1px solid black;">我是#af25_content。。。</div>
+                    <br />
+                    <br />
+                    <a class="button"  onclick="doget()">单击开始AJAX >> get请求</a>
+                </div>
+                <!-- af> af post() -->
+                <div id="af26" class="panel" title=".post()" data-nav="menu_AppFramework">$.post(url,data:{foo:"bar"}, success:function(){}, timeout:"1000",error: function(){} ) - 使用XMLHpttRequest POST请求
+                    <br />
+                    <br />
+                    <script type="text/javascript">
+                        function doPost() {
+                            $.post(webRoot + 'ajax.html', {
+                                foo: "bar"
+                            }, function (data) {
+                                $('#af26_content').html(data)
+                            });
+                        }
+                    </script>
+                    <div id="af26_content" style="border:1px solid black;">我是#af26_content。。。</div>
+                    <br />
+                    <br />
+                    <a class="button"  onclick="doPost()">单击开始XMLHpttRequest >> post请求</a>
+                </div>
+                <!-- af> af getJSON() -->
+                <div id="af27" class="panel" title=".getJSON()" data-nav="menu_AppFramework">$.getJSON(url,data,success); - 使用XMLHpttRequest GET请求并返回一个JSON对象。
+                    <br />
+                    <br />
+                    <script>
+                        function doJSON() {
+                            $.getJSON(webRoot + 'json.html', function (data) {
+                                $('#af27_content').html(JSON.stringify(data))
+                            });
+                        }
+                    </script>
+                    <div style="border:1px solid black" id="af27_content">我是#af27_content。。</div>
+                    <br />
+                    <a class="button"  onclick="doJSON()">单击开始XMLHpttRequest >> get请求，返回JSON</a>
+                </div>
+                <!-- af> af serialize() -->
+                <div id="af28" class="panel" title=".param()">$.param() - 序列化一个对象为一个查询字符串
+                    <br />
+                    <br />  <code>
+                                    var obj= {foo:"foo",bar:"bar"};
+                                </code>
+                    <br />
+                    <br />
+                    <script>
+                        function doSerialize() {
+                            var obj = {
+                                foo: "foo",
+                                bar: "bar"
+                            };
+                            $("#af28_content").html($.param(obj));
+                        }
+                    </script>
+                    <div id="af28_content" style="border:1px solid black">我是#af28_content,序列化的参数结果将显示在这里。。。</div>
+                    <br />
+                    <br />
+                    <a class="button"  onclick="doSerialize()">单击开始在#af28_content显示序列化结果</a>
+                </div>
+                <!-- af> af parseJSON() -->
+                <div id="af29" class="panel" title=".parseJSON()" data-nav="menu_AppFramework">$.parseJSON() - 解析一个字符串并将其转换为一个JSON对象。使用原生JSON解析器,向后兼容性。
+                    <br>
+                    <br>    <code>
+                                    var obj='{"foo":"bar"}';
+                                </code>
+
+                    <script>
+                        function doParseJson() {
+                            var obj = '{"foo":"bar"}';
+                            alert($.parseJSON(obj));
+                        }
+                    </script>
+                    <br>
+                    <a class="button"  onclick="doParseJson()">解析JSON字符串</a>
+                </div>
+                <!-- af> os -->
+                <div id="af30" class="panel" title=".os" data-nav="menu_AppFramework">$.os - 获取设备的操作系统,如果是webkit浏览器webkit返回布尔值>>真
+                    <br>
+                    <br>    <div class="samplecode" >
+                                    $.os.webkit  = <script>document.write($.os.webkit);</script><br>
+                                    $.os.android = <script>document.write($.os.android);</script><br>
+                                    $.os.ipad = <script>document.write($.os.ipad);</script><br>
+                                    $.os.iphone = <script>document.write($.os.iphone);</script><br>
+                                    $.os.ios = <script>document.write($.os.ios);</script><br>
+                                    $.os.webos = <script>document.write($.os.webos);</script><br>
+                                    $.os.touchpad = <script>document.write($.os.touchpad);</script><br>
+                                    $.os.blackberry = <script>document.write($.os.blackberry);</script><br>
+                                    $.os.opera = <script>document.write($.os.opera);</script><br>
+                                    $.os.fennec = <script>document.write($.os.fennec);</script><br>
+                                </div>
+
+                </div>
+                <!-- af> isArray -->
+                <div id="af33" class="panel" title=".isArray()" data-nav="menu_AppFramework">$.isArray(param) - 检查参数是否为数组，返回布尔值>>真/假
+                    <br>
+                    <br>    <div class="samplecode">var notArrayTest="foo";<br>
+                                    var isArrayTest=[];
+
+                                </div>
+
+                    <script>
+                        var notArrayTest = "foo";
+                        var isArrayTest = [];
+
+                        function isNotAnArray() {
+                            alert($.isArray(notArrayTest));
+                        }
+
+                        function isAnArray() {
+                            alert($.isArray(isArrayTest));
+                        }
+                    </script>
+                    <br>
+                    <a class="button"  onclick="isNotAnArray()">单击测试变量notArrayTest是否为数组</a>
+                    <br>
+                    <a class="button"  onclick="isAnArray()">单击测试变量isArrayTest是否为数组</a>
+                    <br>
+                </div>
+                <!-- af> isFunction -->
+                <div id="af34" class="panel" title=".isFunction()" data-nav="menu_AppFramework">$.isFunction(param) - 检查参数是否为函数，返回布尔值>>真/假
+                    <br>
+                    <br>    <div class="samplecode">
+                                    var notFunctionTest="foo";<br>
+                                    var isFunctionTest=function(){};
+
+                                </div>
+
+                    <script>
+                        var notFunctionTest = "foo";
+                        var isFunctionTest = [];
+
+                        function notAFunction() {
+                            alert($.isArray(notFunctionTest));
+                        }
+
+                        function isAFunction() {
+                            alert($.isArray(isFunctionTest));
+                        }
+                    </script>
+                    <br>
+                    <a class="button"  onclick="notAFunction()">单击测试notFunctionTest变量是否为函数</a>
+                    <br>
+                    <a class="button"  onclick="isAFunction()">单击测试isFunctionTest变量是否为函数</a>
+                    <br>
+                </div>
+                <div id="afparent" class="panel" title=".parent()" data-nav="menu_AppFramework">这将返回当前元素的父元素的容器<div class="samplecode">
+                                    $("#afparent").parent();
+                                </div>
+                                我是#afparent，我的父元素id是：content，让我们来验证它。
+                    <br>
+                    <a  onclick="alert($('#afparent').parent().get(0).id);" class="button">单击开始验证#afparent的父元素id</a>
+                </div>
+                <!-- ------------------------------------------ -->
+                <!-- ------------------------------------------ -->
+                <!-- App Framework UI -->
+                <div title="界面" id="afuidemo" class="panel" data-footer='footerui' data-tab="navbar_ui">
+                        <h2 class='expanded' onclick='showHide(this,"AFUI_info");'>App Framework UI</h2>
+                    <p id='AFUI_info'>App Framework UI 为移动应用程序打造的用户界面/用户体验。它使用HTML5和CSS3动画和过渡。我们构建了多套App Framework UI皮肤。
+                        <br>* 固定导航栏
+                        <br>* 面板内容自动滚动
+                        <br>* 应用程序可选页脚功能
+                        <br>
+                    </p>
+                    <ul class="list">
+                        <li>
+                            <a href="#aftransitions">页面切换特效</a>
+                        </li>
+                        <li>
+                            <a href="#afforms">表单样式</a>
+                        </li>
+                        <li>
+                            <a href="#afgrid">网格</a>
+                        </li>
+                        <li>
+                            <a href="#uiapi">$.ui API</a>
+                        </li>
+                         <li>
+                            <a href="#uiinsetlist">插图列表</a>
+                        </li>
+                         <li>
+                            <a href="#uibuttons">按钮</a>
+                        </li>
+                        <li>
+                            <a href="#uifooter">自定义页脚</a>
+                        </li>
+                        <li>
+                            <a href="#uiside">侧边导航菜单</a>
+                        </li>
+                        <li>
+                            <a href="#uiicons">矢量图标</a>
+                        </li>
+                        <li>
+                            <a href="ajax.html" data-persist-ajax="true" data-refresh-ajax="true" title="Remote Page" data-pull-scroller="true">加载外部内容</a>
+                        </li>
+                        <li>
+                            <a href="http://www.baidu.com/" target="_blank">打开一个新页面</a>
+                        </li>
+                        <li>
+                            <a href="#uidefer">延迟加载</a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="uiicons" title="矢量图标" class="panel">
+                        <h2 class='expanded' onclick='showHide(this,"icons_info");'>矢量图标</h2>
+                    <p id='icons_info'>App Framework UI 布置矢量图标在你的应用程序。简单地添加图标类,图像类名和其他你想要的尺寸。
+                        <br>.mini -  .7em
+                        <br>.big - 1.5em
+                        <br>默认是 1em
+                        <br>
+                    </p>
+                    <ul class="list">
+                        <li>
+                            <a  class="icon home">首页(home)</a>
+                        </li>
+                        <li>
+                            <a  class="icon home mini">迷你首页(home mini)</a>
+                        </li>
+                        <li>
+                            <a  class="icon pencil big">铅笔(pencil)</a>
+                        </li>
+                        <li>
+                            <a  class="icon picture big">图片(picture)</a>
+                        </li>
+                        <li>
+                            <a  class="icon camera big">相机(camera)</a>
+                        </li>
+                        <li>
+                            <a  class="icon headset big">耳机(headset)</a>
+                        </li>
+                        <li>
+                            <a  class="icon paper big">纸(paper)</a>
+                        </li>
+                        <li>
+                            <a  class="icon stack big">纸堆(stack)</a>
+                        </li>
+                        <li>
+                            <a  class="icon folder big">文件夹(folder)</a>
+                        </li>
+                        <li>
+                            <a  class="icon tag big">标签(tag)</a>
+                        </li>
+                        <li>
+                            <a  class="icon basket big">篮子(basket)</a>
+                        </li>
+                        <li>
+                            <a  class="icon phone big">电话(phone)</a>
+                        </li>
+                        <li>
+                            <a  class="icon mail big">邮件(mail)</a>
+                        </li>
+                        <li>
+                            <a  class="icon location big">位置(location)</a>
+                        </li>
+                        <li>
+                            <a  class="icon clock big">时钟(clock)</a>
+                        </li>
+                        <li>
+                            <a  class="icon calendar big">日历(calendar)</a>
+                        </li>
+                        <li>
+                            <a  class="icon message big">消息(message)</a>
+                        </li>
+                        <li>
+                            <a  class="icon chat big">聊天(chat)</a>
+                        </li>
+                        <li>
+                            <a  class="icon user big">用户(user)</a>
+                        </li>
+                        <li>
+                            <a  class="icon loading big">加载(loading)</a>
+                        </li>
+                        <li>
+                            <a  class="icon refresh big">刷新(refresh)</a>
+                        </li>
+                        <li>
+                            <a  class="icon magnifier big">放大镜(magnifier)</a>
+                        </li>
+                        <li>
+                            <a  class="icon key big">钥匙(key)</a>
+                        </li>
+                        <li>
+                            <a  class="icon settings big">设置(settings)</a>
+                        </li>
+                        <li>
+                            <a  class="icon graph big">曲线图(graph)</a>
+                        </li>
+                        <li>
+                            <a  class="icon trash big">回收站(trash)</a>
+                        </li>
+                        <li>
+                            <a  class="icon pin big">图钉(pin)</a>
+                        </li>
+                        <li>
+                            <a  class="icon target big">靶子(target)</a>
+                        </li>
+                        <li>
+                            <a  class="icon download big">下载(download)</a>
+                        </li>
+                        <li>
+                            <a  class="icon upload big">上传(upload)</a>
+                        </li>
+                        <li>
+                            <a  class="icon star big">星形(star)</a>
+                        </li>
+                        <li>
+                            <a  class="icon heart big">心形(heart)</a>
+                        </li>
+                        <li>
+                            <a  class="icon warning big">警告(warning)</a>
+                        </li>
+                        <li>
+                            <a  class="icon add big">添加(add)</a>
+                        </li>
+                        <li>
+                            <a  class="icon remove big">移除(remove)</a>
+                        </li>
+                        <li>
+                            <a  class="icon question big">问题(question)</a>
+                        </li>
+                        <li>
+                            <a  class="icon info big">信息(info)</a>
+                        </li>
+                        <li>
+                            <a  class="icon error big">错误(error)</a>
+                        </li>
+                        <li>
+                            <a  class="icon check big">检查(check)</a>
+                        </li>
+                        <li>
+                            <a  class="icon minimize big">最小化(minimize)</a>
+                        </li>
+                        <li>
+                            <a  class="icon close big">关闭(close)</a>
+                        </li>
+                        <li>
+                            <a  class="icon up big">上(up)</a>
+                        </li>
+                        <li>
+                            <a  class="icon down big">下(down)</a>
+                        </li>
+                        <li>
+                            <a  class="icon left big">左(left)</a>
+                        </li>
+                        <li>
+                            <a  class="icon right big">右(right)</a>
+                        </li>
+                        <li>
+                            <a  class="icon tools big">工具(tools)</a>
+                        </li>
+                        <li>
+                            <a  class="icon html5 big">HTML5(html5)</a>
+                        </li>
+                        <li>
+                            <a  class="icon css big">CSS(css)</a>
+                        </li>
+                        <li>
+                            <a  class="icon js big">JS(js)</a>
+                        </li>
+                        <li>
+                            <a  class="icon cloud big">云(cloud)</a>
+                        </li>
+                        <li>
+                            <a  class="icon tv big">电视(tv)</a>
+                        </li>
+                        <li>
+                            <a  class="icon wifi big">无线网络(wifi)</a>
+                        </li>
+                        <li>
+                            <a  class="icon new big">新(new)</a>
+                        </li>
+                        <li>
+                            <a  class="icon mic big">麦克风(mic)</a>
+                        </li>
+                        <li>
+                            <a  class="icon database big">数据库(database)</a>
+                        </li>
+                        <li>
+                            <a  class="icon busy big">繁忙(busy)</a>
+                        </li>
+                        <li>
+                            <a  class="icon bug big">调试(bug)</a>
+                        </li>
+                        <li>
+                            <a  class="icon lamp big">灯(lamp)</a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="uidefer" title="延迟加载" class="panel" data-defer="defer.html">延迟加载Ajax工作需要一个web浏览器。我们做的是加载html $.ui之后,这可以帮助加快应用程序的加载时间。</div>
+                <div id="uiside" title="侧边菜单导航" class="panel" data-footer="footerui" data-nav='menu_AppFramework'> <b>侧边菜单导航</b>
+                    <br>如果你是在平板电脑上,你已经看到菜单。如果你用的是一个手机,点击"menu_AppFramework"按钮来打开它。
+                    <br>
+                    <Br>侧菜单创建使用 &lt;nav&gt; 标签. 您可以设置id,然后在每个参考面板通过设置 data-nav="id" 属性来显示指定&lt;nav&gt; 标签内容. <br>
+                    <a onclick="$.ui.toggleSideMenu();" class="button">menu_AppFramework</a>
+                    </div>
+                <div id="uifooter" title="自定义页脚" class="panel" data-footer='footerui3'>
+                    <p>你应该注意到页脚不再是默认的。它是特定于应用程序的UI框架,选择转换,UI和API </p>您可以创建自定义&lt;footer&gt;标签。然后设置data-footer="id"属性在每个面板改变它们的显示。
+                </div>
+                <div id="afgrid" title="网格" class="panel" data-footer="footerui">
+                    <p>你可以指定以下类型的网格</p>
+                    <ul class="list inset">
+                        <li>.col2 - 50% (2x2)</li>
+                        <li>.col3 - 33.3% (3x3)</li>
+                        <li>.col1-3 - 33.3% (33.3% 3 列)</li>
+                        <li>.col2-3 - 66% (66.6% 3 列)</li>
+                    </ul>
+                    手机,网格系统总是默认为单行。在平板电脑上,它就会显示内联。
+
+                    <h2>2 列</h2>
+                    <div class="grid">
+                        <div class="col2" style="background:#ddd;">col2(50%)左</div>
+                        <div class="col2" style="background:#eee;">.col2(50%)右</div>
+                    </div>
+
+                    <h2>3 列</h2>
+                    <br>
+                    <div class="grid">
+                        <div class="col3" style="background:#ddd;">.col3(33.3%)左</div>
+                        <div class="col3" style="background:#eee;">.col3(33.3%)中</div>
+                        <div class="col3" style="background:#ddd;">.col3(33.3%)右</div>
+                    </div>
+
+                    <h2>1-3/2-3 列</h2>
+                    <br>
+                    <div class="grid">
+                        <div class="col1-3" style="background:#ddd;">.ol1-3(33.3%)左</div>
+
+                        <div class="col2-3" style="background:#eee;">.col2-3(66.6%)右</div>
+                    </div>
+
+                    <h2>2-3/1-3 列</h2>
+                    <br>
+                    <div class="grid">
+                        <div class="col2-3" style="background:#ddd;">.col2-3(66.6%)左</div>
+
+                        <div class="col1-3" style="background:#eee;">.ol1-3(33.3%)右</div>
+                    </div>
+
+
+                </div>
+                <div id="afforms" title="表单" class="panel" data-footer='footerui'>
+                <div class="formGroupHead">标准</div>
+                <form>
+                    <input type="range" >
+                    <input type="text" placeholder="测试">
+                    <input type="search" placeholder="搜索">
+                    <textarea rows="6" placeholder="请输入你的地址"></textarea>
+                </form>
+
+                <div class="formGroupHead">分组</div>
+                <form>
+                    <div class="input-group">
+                        <input type="text" placeholder="测试">
+                        <input type="search" placeholder="搜索">
+                        <textarea rows="6" placeholder="请输入你的地址"></textarea>
+                    </div>
+                </form>
+                <div class="formGroupHead">标签</div>
+                <form>
+                    <label for="test1">姓名</label><input id="test1" type="text" placeholder="测试">
+                    <label for="test2">搜索</label><input  id="test2" type="search" placeholder="搜索">
+                    <label for="test3">地址</label><textarea  id="test3" rows="6" placeholder="请输入你的地址"></textarea>
+                </form>
+        <form>
+            <div class="input-group">
+                <label for="test1">测试</label><input id="test1" type="text" placeholder="测试">
+                <label for="test2">搜索</label><input  id="test2" type="search" placeholder="搜索">
+                <label for="test3">地址</label><textarea  id="test3" rows="6" placeholder="请输入你的地址"></textarea>
+
+                <input type="submit" class="button" value="提交" style='float:right;'>
+            </div>
+        </form>
+
+        <div class="formGroupHead">单选框</div>
+        <form>
+            <div class="input-group">
+                <label>性别</label><input id="aaaa" type="radio" name="test" value="1"><label for="aaaa">男</label>
+                <input id="bbbb" type="radio" name="test" value="2"><label for="bbbb">女</label>
+                <input id="cccc" type="radio" name="test" value="3"><label for="cccc">保密 </label>
+                <br style="clear:both">
+                <input type="submit" class="button" value="提交" style='float:right;'>
+            </div>
+        </form>
+        <div class="formGroupHead">复选框和按钮</div>
+        <form>
+            <div class="input-group">
+                <label>性别</label><input id="aaaaa" type="checkbox" name="test2" value="1"><label for="aaaaa">男</label>
+                <input id="bbbbb" type="checkbox" name="test2" value="2"><label for="bbbbb">女</label>
+                <input id="ccccc" type="checkbox" name="test2" value="3"><label for="ccccc">保密 </label>
+                <br style="clear:both">
+                <input type="submit" class="button" value="提交" style='float:right;'>
+            </div>
+        </form>
+
+        <div class="formGroupHead">切换开关</div>
+        <form>
+            <div class="input-group">
+                <label></label><input id="toggle1" type="checkbox" name="toggle1" value="1" class="toggle"><label for="toggle1" data-on="开" data-off="关"><span></span></label>
+                <hr><input id="toggle2" type="radio" name="toggle2" value="1" class="toggle"><label for="toggle2" data-on="启用" data-off="禁用"><span></span></label>
+                <input id="toggle3" type="radio" name="toggle2" value="1" class="toggle"><label for="toggle3" data-on="启用" data-off="禁用"><span></span></label>
+
+            </div>
+        </form>
+
+                </div>
+                <div title="Transitions" id="aftransitions" class="panel" data-footer='footerui'>
+                        <h2 class='expanded' onclick='showHide(this,"AFUI_transitions");'>App Framework UI</h2>
+                    <p id='AFUI_transitions'>   <strong>af.ui 过渡特效</strong> 列表。你可以很容易地添加/扩展自己的过渡特效。设置data-transition属性改变过渡效果。</p>
+                    <ul class="list">
+                        <li>
+                            <a href="#transition1" data-transition="slide">滑动过渡(slide)</a>
+                        </li>
+                        <li>
+                            <a href="#transition2" data-transition="up">滑盖式(up)</a>
+                        </li>
+                        <li>
+                            <a href="#transition3" data-transition="down">滑下来(down)</a>
+                        </li>
+                        <li>
+                            <a href="#transition4" data-transition="pop">Pop(pop)</a>
+                        </li>
+                        <li>
+                            <a href="#transition5" data-transition="flip">翻转(flip)</a>
+                        </li>
+                        <li>
+                            <a href="#transition6" data-transition="fade">淡入(fade)</a>
+                        </li>
+                        <li>
+                            <a href="#transition7">默认的模态</a>
+                        </li>
+                        <li>
+                            <a href="#transition8">自定义模态</a>
+                        </li>
+                    </ul>
+                    <br/>
+                    <br/>
+                </div>
+                <div id="uiinsetlist" title="插图列表" class="panel" data-footer='footerui'>
+                    $.ui.API函数插图列表
+                    <ul class="list inset">
+                        <li>
+                            <a href="#uigoback">.goBack()</a>
+                        </li>
+                        <li>
+                            <a href="#uiclearhistory">.clearHistory()</a>
+                        </li>
+                        <li class="divider">
+                           我是完美的黄金割线~~~
+                        </li>
+                        <li>
+                            <a href="#uiaddcontentdiv">.addContentDiv ()</a>
+                        </li>
+                        <li>
+                            <a href="#uisettitle">.setTitle(text)</a>
+                        </li>
+                        <li>
+                            <a href="#uisetbackbutton">.setBackButtonText()</a>
+                        </li>
+                        <li>
+                            <a href="#uishowmask">.showMask()</a>
+                        </li>
+                        <li>
+                            <a href="#uihidemask">.hideMask()</a>
+                        </li>
+                        <li>
+                            <a href="#uiloadcontent">.loadContent();</a>
+                        </li>
+                        <li>
+                            <a href="#uilaunch">.launch();</a>
+                        </li>
+                        <li>
+                            <a href="#uiready">.ready();</a>
+                        </li>
+                        <li>
+                            <a href="#uibadge">.updateBadge();</a>
+                        </li>
+                        <li>
+                            <a href="#uiremovebadge">.removeBadge();</a>
+                        </li>
+                        <li>
+                            <a href="#uitoggleheader">.toggleHeaderMenu();</a>
+                        </li>
+                        <li>
+                            <a href="#uitoggleside">.toggleSideMenu();</a>
+                        </li>
+                        <li>
+                            <a href="#uitogglenav">.toggleNavMenu();</a>
+                        </li>
+                        <li>
+                            <a href="#uiactionsheet">.actionsheet()</a>
+                        </li>
+                        <li>
+                            <a href="#uiscrolltotop">.scrollToTop()</a>
+                        </li>
+                        <li>
+                            <a href="#uiscrolltobottom">.scrollToBottom()</a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="uibuttons" title="内置按钮列表" class="panel" data-footer='footerui'>
+                    下面是不同类型的按钮<br><br>
+                    <a class="button">测试</a><br><br>
+                    <a class="button red previous">红色的按钮(previous)</a><br><br>
+                    <a class="button red next">红色的按钮(next)</a><br><br>
+                    <a class="button icon pencil">测试按钮(icon pencil)</a><br><br><br>
+                    <a class="button block">我是块级按钮，要占整屏，好长~(block)</a><br><br><br>
+                    水平分组按钮
+                    <br><br>
+                    <div class="button-grouped" style='width:300px'>
+                        <a class="button">测试</a>
+                        <a class="button">测试1</a>
+                        <a class="button">测试2</a>
+                    </div>
+                    <br><br>
+                    垂直分组按钮<br><br>
+                    <div class="button-grouped vertical" style="width:200px;">
+                        <a class="button icon pencil">测试(icon pencil)</a>
+                        <a class="button">测试1</a>
+                        <a class="button">测试2</a>
+                    </div>
+                    <br><br>
+                    水平分组占屏(按钮保持按下状态)<br><br>
+                    <div class="button-grouped flex tabbed">
+                        <a class="button icon cloud">App Framework按钮组</a>
+                        <a class="button">我是酱油君，专业酱油二十年，打得一手好酱油....</a>
+                        <a class="button">测试</a>
+                    </div>
+                    <br><br>
+                    颜色按钮<br><br>
+                    <a class="button yellow">黄色(yellow)</a><br><br>
+                    <a class="button red">红色(red)</a><br><br>
+                    <a class="button green">绿色(green)</a><br><br>
+                    <a class="button orange">橙色(orange)</a><br><br>
+                    <a class="button slate">蓝色(slate)</a><br><br>
+                    <a class="button black">黑色(black)</a><br><br>
+                    <a class="button gray">灰色(gray)</a><br><br>
+
+                </div>
+                <div id="uiapi" title="$.ui.API" class="panel" data-pull-scroller='true' data-footer='footerui'>
+                    <ul class="list">
+                        <li>
+                            <a href="#uigoback">.goBack()</a>
+                        </li>
+                        <li>
+                            <a href="#uiclearhistory">.clearHistory()</a>
+                        </li>
+                        <li>
+                            <a href="#uiaddcontentdiv">.addContentDiv ()</a>
+                        </li>
+                        <li>
+                            <a href="#uisettitle">.setTitle(text)</a>
+                        </li>
+                        <li>
+                            <a href="#uisetbackbutton">.setBackButtonText()</a>
+                        </li>
+                        <li>
+                            <a href="#uishowmask">.showMask()</a>
+                        </li>
+                        <li>
+                            <a href="#uihidemask">.hideMask()</a>
+                        </li>
+                        <li>
+                            <a href="#uiloadcontent">.loadContent();</a>
+                        </li>
+                        <li>
+                            <a href="#uilaunch">.launch();</a>
+                        </li>
+                        <li>
+                            <a href="#uiready">.ready();</a>
+                        </li>
+                        <li>
+                            <a href="#uibadge">.updateBadge();</a>
+                        </li>
+                        <li>
+                            <a href="#uiremovebadge">.removeBadge();</a>
+                        </li>
+                        <li>
+                            <a href="#uitoggleheader">.toggleHeaderMenu();</a>
+                        </li>
+                        <li>
+                            <a href="#uitoggleside">.toggleSideMenu();</a>
+                        </li>
+                        <li>
+                            <a href="#uitogglenav">.toggleNavMenu();</a>
+                        </li>
+                        <li>
+                            <a href="#uiactionsheet">.actionsheet()</a>
+                        </li>
+                        <li>
+                            <a href="#uiscrolltotop">.scrollToTop()</a>
+                        </li>
+                        <li>
+                            <a href="#uiscrolltobottom">.scrollToBottom()</a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="uibadge" title="更新徽章" class="panel" data-footer='footerui'>更新一个给定的值或创建一个徽章。
+                    <br>徽章位置分布 <div class="samplecode">
+                            bl - 左侧底部<br>
+                            tl - 左侧顶部<br>
+                            br - 右侧底部<br>
+                            tr - 右侧顶部 (默认)<br>
+                        </div>
+
+                    <ul class="list">
+                        <li id='libadge'>
+                            <a >酱油君</a>
+                        </li>
+                    </ul>   <div class="samplecode">
+                            $.ui.updateBadge("#libadge","已打100桶","bl");
+                        </div>
+
+                    <a  onclick="$.ui.updateBadge('#libadge','已打100桶','tl');" class="button">单击创建徽章</a>
+                    <br>
+                </div>
+                <div id="uiremovebadge" title="移除徽章" class="panel" data-footer='footerui'>移除徽章.
+                    <ul class="list">
+                        <li id='libadge2'>
+                            <a >酱油君</a>
+                        </li>
+                    </ul>   <div class="samplecode">
+                            $.ui.removeBadge("#target");
+                        </div>
+
+                    <a  onclick="$.ui.updateBadge('#libadge2','已打2桶','tl');" class="button">单击创建徽章</a>
+                    <br>
+                    <a  onclick="$.ui.removeBadge('#libadge2');" class="button">单击移除徽章</a>
+                </div>
+                <div id="uiready" title="启动函数" class="panel" data-footer='footerui'>应用程序启动完成后，执行的函数<div class="samplecode">
+                            $.ui.ready(function(){});
+                        </div>
+
+                </div>
+                <div id="uigoback" title="返回上一次历史记录" class="panel" data-footer='footerui'>您可以使用这个命令返回上一次的历史记录。 <div class="samplecode">
+                            $.ui.goBack()
+                        </div>
+
+                    <a  onclick="$.ui.goBack()" class="button">单击我穿越回去。。</a>
+                </div>
+                <div id="uilaunch" title="控制加载界面" class="panel" data-footer='footerui'>您可以使用此命令来启动 App Framework UI 应用程序 如果设置你的应用程序框架 autoLaunch=false 那它会一直显示加载界面    <div class="samplecode">
+                            $.ui.autoLaunch=false;<br>
+                            $.ui.golaunch()
+                        </div>
+
+                </div>
+                <div id="uiclearhistory" title="清除历史记录" class="panel" data-footer='footerui'>您可以使用这个命令手动清除历史记录    <div class="samplecode">
+                            $.ui.clearHistory()
+                        </div>
+
+                    <a  onclick="$.ui.clearHistory()" class="button">单击清除历史记录</a>
+                </div>
+                <div id="uiaddcontentdiv" title="添加Div内容" class="panel" data-footer='footerui'>您可以使用此命令来添加一个新的div程序。且设置滚动等。  <div class="samplecode">
+                            $.ui.addContentDiv(id, content,title, pullToRefresh, refreshFunc)
+                        </div>
+
+                    <script>
+                        function addDiv() {
+                            $.ui.addContentDiv("myAddedDiv", "我是动态添加", "啊，新Div");
+                            $("#addContent").show();
+                            $("#addContentButton").hide();
+                        }
+                    </script>   <span id="addContent" style='display:none'>
+                            <a href="#myAddedDiv" class="button">查看新DIV内容</a>
+                            <br/>
+                        </span>
+
+                    <a id='addContentButton'  onclick="addDiv();" class="button">添加Div内容</a>
+                </div>
+                <div id="uisettitle" title="设置标题" class="panel" data-footer='footerui'>设置当前页面的页面标题。但是它不会被保留 <div class="samplecode">
+                            $.ui.setTitle('我是标题君。。');
+                        </div>
+
+                    <a  onclick="$.ui.setTitle('我是标题君。。');" class="button">单击设置标题</a>
+                </div>
+                <div id="uisetbackbutton" title="改变后退按钮的文本" class="panel" data-footer='footerui'>设置后退按钮的文本。你也可以初始化的时候设置后退按钮。 <div class="samplecode">
+                            $.ui.setBackButtonText('后退二号');<br><br>
+
+                            $.ui.backButtonText="后退二号"; //override<br>
+                            <a  onclick="$.ui.setBackButtonText('后退二号');" class="button">单击改变后退按钮文本</a>
+                        </div>
+
+                </div>
+                <div id="uishowmask" title="显示遮罩" class="panel" data-footer='footerui'>显示遮罩加载页面。你可以手动触发。<div class="samplecode">
+                            $.ui.showMask();
+                        </div>
+
+                    <script>
+                        function showMask(text) {
+
+                            $.ui.showMask(text);
+                            window.setTimeout(function () {
+                                $.ui.hideMask();
+                            }, 2000);
+                        }
+                    </script>
+                    <a  onclick="showMask('我是遮罩君，2秒闪')" class="button">显示遮罩</a>
+                </div>
+                <div id="uihidemask" title="隐藏遮罩" class="panel" data-footer='footerui'>隐藏遮罩加载页面。你可以手动触发。 <div class="samplecode">
+                            $.ui.hideMask();
+                        </div>
+
+                    <a  onclick="$.ui.showMask('一直在的遮罩君')" class="button">单击显示遮罩</a>|
+                    <a  onclick="$.ui.hideMask()" class="button">单击隐藏遮罩</a>
+                </div>
+                <div id="uiloadcontent" title="载入Div" class="panel" data-footer='footerui'>允许你触发页面转换/导航事件。 <div class="samplecode">
+                            $.ui.loadContent()
+                        </div>
+
+                    <a  onclick="$.ui.loadContent('uiapi',false,false,'flip')" class="button">单击加载 $.ui API 页，使用翻转效果</a>
+                </div>
+                <div id="uitoggleheader" title="切换页眉" class="panel" data-footer="footerui">允许你隐藏/显示页眉。当切换页眉隐藏时内容区域将扩大。<div class="samplecode">
+                            $.ui.toggleHeaderMenu();
+                        </div>
+
+                    <a  onclick="$.ui.toggleHeaderMenu()" class="button">单击切换页眉显示状态</a>
+                </div>
+                <div id="uitogglenav" title="切换页脚导航" class="panel" data-footer="footerui">允许你隐藏/显示页脚。当切换页脚隐藏时内容区域将扩大。
+                    <br>你也可以通过设置panel上的data-footer="none"来达到隐藏效果<div class="samplecode">
+                            $.ui.toggleNavMenu();
+                        </div>
+
+                    <a  onclick="$.ui.toggleNavMenu()" class="button">单击切换页脚显示状态</a>
+                </div>
+                <div id="uitoggleside" title="切换侧边导航" class="panel" data-footer="footerui">你可以切换导航菜单,如果你在平板电脑,那它默认是显示的。<div class="samplecode">
+                            $.ui.toggleSideNav();
+                        </div>
+
+                    <a  onclick="$.ui.toggleSideMenu();" class="button">单击切换侧边导航展开状态</a>
+                </div>
+                <div id="uiactionsheet" title="浮动层显示框" class="panel" data-footer='footerui'>这是一个actionsheet插件。浮动层显示框 <div class="samplecode">
+                            $.ui.actionsheet()
+                        </div>
+
+                    <br>
+                    <br>
+                    <a  onclick="$.ui.actionsheet('<a href=\'javascript:;\' class=\'button\'>测试</a>')" class="button">单击显示自定义浮动层显示框</a>
+                    <br/>
+                    <br/>
+                </div>
+                <div id="uiscrolltotop" title="滚动到顶部" class="panel" data-footer='footerui'>这允许您滚动到页面的顶部。 <div class="samplecode">
+                            $.ui.scrollToTop(div_id)
+                        </div>
+
+                    <br>
+                    <br>我是酱油君.
+                    <br>
+                    <br>
+                    <br>
+                    <br>我是酱油君.
+                    <br>
+                    <br>
+                    <br>
+                    <br>我是酱油君.
+                    <br>
+                    <br>
+                    <br>
+                    <br>我是酱油君.
+                    <br>
+                    <br>
+                    <br>
+                    <br>我是酱油君.
+                    <br>
+                    <br>
+                    <br>
+                    <br>我是酱油君.
+                    <br>
+                    <br>
+                    <br>
+                    <br>我是酱油君.
+                    <br>
+                    <br>
+                    <br>
+                    <br>我是酱油君.
+                    <br>
+                    <br>
+                    <br>
+                    <br>我是酱油君.
+                    <br>
+                    <br>
+                    <br>
+                    <br>我是酱油君.
+                    <br>
+                    <br>
+                    <br>
+                    <br>我是酱油君.
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <a  onclick="$.ui.scrollToTop('uiscrolltotop')" class="button">单击滚动到顶部</a>
+                    <br/>
+                    <br/>
+                </div>
+                <div id="uiscrolltobottom" title="滚动到底部" class="panel" data-footer='footerui'>这允许您滚动到页面的底部。 <div class="samplecode">
+                            $.ui.scrollToTop(div_id)
+                        </div>
+
+                    <a  onclick="$.ui.scrollToBottom('uiscrolltobottom')" class="button">单击滚动到底部</a>
+                    <br>
+                    <br>我是酱油君.
+                    <br>
+                    <br>
+                    <br>
+                    <br>我是酱油君.
+                    <br>
+                    <br>
+                    <br>
+                    <br>我是酱油君.
+                    <br>
+                    <br>
+                    <br>
+                    <br>我是酱油君.
+                    <br>
+                    <br>
+                    <br>
+                    <br>我是酱油君.
+                    <br>
+                    <br>
+                    <br>
+                    <br>我是酱油君.
+                    <br>
+                    <br>
+                    <br>
+                    <br>我是酱油君.
+                    <br>
+                    <br>
+                    <br>
+                    <br>我是酱油君.
+                    <br>
+                    <br>
+                    <br>
+                    <br>我是酱油君.
+                    <br>
+                    <br>
+                    <br>
+                    <br>我是酱油君.
+                    <br>
+                    <br>
+                    <br>
+                    <br>我是酱油君.
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br/>
+                    <br/>
+                </div>
+                <!-- App Framework UI> API -->
+                <!-- App Framework UI> Transitions -->
+                <div title="滑动过渡" id="transition1" class="panel splashscreen" data-footer='footerui' style="padding-left:0px">
+                    <div style="text-align:center;width:100%;color:white;font-size:40px">App Framework 滑动过渡特效</div>
+                </div>
+                <div title="滑盖式过渡" id="transition2" class="panel splashscreen" data-footer='footerui' style="padding-left:0px">
+                     <div style="text-align:center;width:100%;color:white;font-size:40px">App Framework 滑盖式过渡特效</div>
+                </div>
+                <div title="滑下过渡" id="transition3" class="panel splashscreen" data-footer='footerui' style="padding-left:0px">
+                     <div style="text-align:center;width:100%;color:white;font-size:40px">App Framework 滑下过渡特效</div>
+                </div>
+                <div title="Pop过渡" id="transition4" class="panel splashscreen" data-footer='footerui' style="padding-left:0px">
+                    <div style="text-align:center;width:100%;color:white;font-size:40px">App Framework Pop过渡特效</div>
+                </div>
+                <div title="翻转过渡" id="transition5" class="panel splashscreen" data-footer='footerui' style="padding-left:0px">
+                    <div style="text-align:center;width:100%;color:white;font-size:40px">App Framework 翻转过渡特效</div>
+                </div>
+                <div title="淡入过渡" id="transition6" class="panel splashscreen" data-footer='footerui' style="padding-left:0px">
+                    <div style="text-align:center;width:100%;color:white;font-size:40px">App Framework 淡入过渡特效</div>
+                </div>
+                <div title="模态窗口" id="transition7" class="panel" data-modal="true" data-unload="unloadedPanel">
+                    我一个默认的模态窗口,没有关闭按钮的页脚和页眉
+                </div>
+                <div title="Modal" id="transition8" class="panel" data-modal="true" data-unload="unloadedPanel">
+                    <header>
+                        <h1>自定义模态</h1>
+                    </header>
+                    我是一个自定义模态窗口
+                    <br>
+                    <br>
+                    这个代码 onclick='$.ui.hideModal()' 可以隐藏当前模态窗口。
+                    <br>
+                    <br>
+                    这个代码 data-header="none" 也可以隐藏当前模态窗口。
+                    <br>
+                    <br>
+                    <br>输入框。
+                    <br>
+                    <input type="text" class="af-ui-forms" id="modal_test">
+                    <footer>
+                        <a href="#" onclick='$.ui.hideModal()' class="icon home">自定义</a>
+                    </footer>
+                </div>                        
+                <!-- ------------------------------------------ -->
+                <!-- ------------------------------------------ -->
+                <!-- Plugins -->
+                <div title="插件" id="afweb" class="panel" data-header="testheader">
+                        <h2 class='expanded' onclick='showHide(this,"afweb_info");'>插件</h2>
+                    <p id='afweb_info'>这是插件库的小部件，它可以协助你开发移动应用程序。其中一些运用于App Framework UI.</p>
+                    <ul class="list">
+                        <li>
+                            <a href="#webslider">滚动插件</a>
+                        </li>
+
+                        <li>
+                            <a href="#webselect">下拉框插件</a>
+                        </li>
+                        <li>
+                            <a href="#webpassword">密码框插件</a>
+                        </li>
+                        <li>
+                            <a href="#webanimate">CSS3动画插件</a>
+                        </li>
+                        <li>
+                            <a href="#webactionsheet">浮动层显示插件</a>
+                        </li>
+                        <li>
+                            <a href="#webpopup">弹窗插件</a>
+                        </li>
+                        <li>
+                            <a href="#touchevents">触屏事件</a>
+                        </li>
+                    </ul>
+                    <br/>
+                    <br/>
+                </div>
+                <!-- Plugins> af.scroller -->
+                <div title="af.scroller插件" class="panel" id="webslider" data-iscroll="false">
+                    <style type="text/css">
+                        #pullDown,#pullUp {    
+                            height: 40px;    
+                            line-height: 40px;    
+                            padding: 5px 10px;    
+                            font-weight: bold;    
+                            font-size: 14px;    
+                            color: #888;    
+                        }    
+                            
+                        #pullDown .pullDownIcon,#pullUp .pullUpIcon {    
+                            display: block;    
+                            float: left;    
+                            width: 40px;    
+                            height: 40px;     
+                            -webkit-background-size: 40px 80px;    
+                            background-size: 40px 80px;    
+                            -webkit-transition-property: -webkit-transform;    
+                            -webkit-transition-duration: 250ms;    
+                        }    
+                            
+                        #pullDown .pullDownIcon {    
+                            -webkit-transform: rotate(0deg) translateZ(0);    
+                        }    
+                            
+                        #pullUp .pullUpIcon {    
+                            -webkit-transform: rotate(-180deg) translateZ(0);    
+                        }    
+                            
+                        #pullDown.flip .pullDownIcon {    
+                            -webkit-transform: rotate(-180deg) translateZ(0);    
+                        }    
+                            
+                        #pullUp.flip .pullUpIcon {    
+                            -webkit-transform: rotate(0deg) translateZ(0);    
+                        }    
+                            
+                        #pullDown.loading .pullDownIcon,#pullUp.loading .pullUpIcon {    
+                            background-position: 0 100%;    
+                            -webkit-transform: rotate(0deg) translateZ(0);    
+                            -webkit-transition-duration: 0ms;    
+                            -webkit-animation-name: loading;    
+                            -webkit-animation-duration: 2s;    
+                            -webkit-animation-iteration-count: infinite;    
+                            -webkit-animation-timing-function: linear;    
+                        }    
+                            
+                        .-webkit-keyframes loading {    
+                            from {     
+                                -webkit-transform:rotate(0deg)translateZ(0);    
+                            }    
+                            
+                            .to {    
+                                -webkit-transform: rotate(360deg) translateZ(0);    
+                            }    
+                        }  
+                    </style>
+                    <script src="./build/iscroll-probe.js" type="text/javascript"></script>
+                    <script>
+                            var myScroll;
+                            var pullDownEl, pullDownL;
+                            var pullUpEl, pullUpL;
+                            var Downcount = 0 ,Upcount = 0;
+                            var loadingStep = 0;//加载状态0默认，1显示加载状态，2执行加载数据，只有当为0时才能再次加载，这是防止过快拉动刷新
+                            function pullDownAction() {//下拉事件
+                                setTimeout(function() {
+                                    var el, li, i;
+                                    el = $('#pull_content');
+                                    for (i = 0; i < 3; i++) {
+                                        li = $("<div></div>");
+                                        Downcount++;
+                                        li.text('new Add ' + Downcount + " ！");
+                                        el.prepend(li);
+                                    }
+                                    pullDownEl.removeClass('loading');
+                                    pullDownL.html('下拉显示更多...');
+                                    pullDownEl['class'] = pullDownEl.attr('class');
+                                    pullDownEl.attr('class','').hide();
+                                    myScroll.refresh();
+                                    loadingStep = 0;
+                                }, 1000); //1秒
+                            }
+                            function pullUpAction() {//上拉事件
+                                setTimeout(function() {
+                                    var el, li, i;
+                                    el = $('#pull_content');
+                                    for (i = 0; i < 3; i++) {
+                                        li = $("<div></div>");
+                                        Upcount++;
+                                        li.text('new Add ' + Upcount + " ！");
+                                        el.append(li);
+                                    }
+                                    pullUpEl.removeClass('loading');
+                                    pullUpL.html('上拉显示更多...');
+                                    pullUpEl['class'] = pullUpEl.attr('class');
+                                    pullUpEl.attr('class','').hide();
+                                    myScroll.refresh();
+                                    loadingStep = 0;
+                                }, 1000);
+                            }
+
+                            function loaded() {
+                                pullDownEl = $('#pullDown');
+                                pullDownL = pullDownEl.find('.pullDownLabel');
+                                pullDownEl['class'] = pullDownEl.attr('class');
+                                pullDownEl.attr('class','').hide();
+                                
+                                pullUpEl = $('#pullUp');
+                                pullUpL = pullUpEl.find('.pullUpLabel');
+                                pullUpEl['class'] = pullUpEl.attr('class');
+                                pullUpEl.attr('class','').hide();
+
+                                if(myScroll){
+                                    myScroll.destroy();
+                                }
+                                if(!myScroll){
+                                    $('#webslider').wrapInner(document.createElement("div"));
+                                }
+
+                                myScroll = new IScroll('#webslider', {
+                                    probeType: 2,//probeType：1对性能没有影响。在滚动事件被触发时，滚动轴是不是忙着做它的东西。probeType：2总执行滚动，除了势头，反弹过程中的事件。这类似于原生的onscroll事件。probeType：3发出的滚动事件与到的像素精度。注意，滚动被迫requestAnimationFrame（即：useTransition：假）。
+                                    scrollbars: true,//有滚动条
+                                    mouseWheel: true,//允许滑轮滚动
+                                    fadeScrollbars: true,//滚动时显示滚动条，默认影藏，并且是淡出淡入效果
+                                    bounce:true,//边界反弹
+                                    interactiveScrollbars:true,//滚动条可以拖动
+                                    shrinkScrollbars:'scale',// 当滚动边界之外的滚动条是由少量的收缩。'clip' or 'scale'.
+                                    click: true ,// 允许点击事件
+                                    keyBindings:true,//允许使用按键控制
+                                    momentum:true// 允许有惯性滑动
+                                });
+                                //滚动时
+                                myScroll.on('scroll', function(){
+                                    if(loadingStep == 0 && !pullDownEl.attr('class').match('flip|loading') && !pullUpEl.attr('class').match('flip|loading')){
+                                        if (this.y > 5) {
+                                            //下拉刷新效果
+                                            pullDownEl.attr('class',pullUpEl['class'])
+                                            pullDownEl.show();
+                                            myScroll.refresh();
+                                            pullDownEl.addClass('flip');
+                                            pullDownL.html('准备刷新...');
+                                            loadingStep = 1;
+                                        }else if (this.y < (this.maxScrollY - 5)) {
+                                            //上拉刷新效果
+                                            pullUpEl.attr('class',pullUpEl['class'])
+                                            pullUpEl.show();
+                                            myScroll.refresh();
+                                            pullUpEl.addClass('flip');
+                                            pullUpL.html('准备刷新...');
+                                            loadingStep = 1;
+                                        }
+                                    }
+                                });
+                                //滚动完毕
+                                myScroll.on('scrollEnd',function(){
+                                    if(loadingStep == 1){
+                                        if (pullUpEl.attr('class').match('flip|loading')) {
+                                            pullUpEl.removeClass('flip').addClass('loading');
+                                            pullUpL.html('Loading...');
+                                            loadingStep = 2;
+                                            pullUpAction();
+                                        }else if(pullDownEl.attr('class').match('flip|loading')){
+                                            pullDownEl.removeClass('flip').addClass('loading');
+                                            pullDownL.html('Loading...');
+                                            loadingStep = 2;
+                                            pullDownAction();
+                                        }
+                                    }
+                                });
+                            }
+                            $('a[href="#webslider"]').bind('click',function(){
+                                setTimeout(function(){
+                                    loaded();
+                                });
+                            });
+                        $.ui.ready(function () {
+                            //the browser debug
+                            //loaded();
+                        });
+                    </script>
+                        <div id="pullDown">  
+                            <div class="pullDownIcon icon down"></div>  
+                            <div class="pullDownLabel">下拉刷新</div>  
+                        </div> 
+                        <div id="pull_content">
+                                       <div>陈矫字季弼，广陵东阳人也。避乱江东及东城，辞孙策、袁术之命，还本郡。太守陈登请为功曹，使矫诣许①。谓曰：“许下论议，待吾不足；足下相为观察，还以见诲。”矫还曰：“闻远近之论，颇谓明府骄而自矜。”登曰：“夫闺门雍穆②，有德有行，吾敬陈元方兄弟；渊清玉洁，有礼有法，吾敬华子鱼；清修疾恶，有识有义，吾敬赵元达；博闻强记，奇逸卓荦，吾敬孔文举；雄姿杰出，有王霸之略，吾敬刘玄德：所敬如此，何骄之有！余子琐琐，亦焉足录哉？”登雅意如此，而深敬友矫。
+郡为孙权所围于匡奇，登令矫求救于太祖。矫说太祖曰：“鄙郡虽小，形便之国也，若蒙救援，使为外藩，则吴人剉③谋，徐④方永安，武声远震，仁爱滂流，未从之国，望风景附，崇德养威，此王业也。”太祖奇矫，欲留之。矫辞曰：“本国倒悬，本奔走告急，纵无申胥之效，敢忘弘演之义乎？”太祖乃遣赴救。吴军既退，登多设间伏，勒兵追奔，大破之。
+    太祖辟矫为司空掾属，除相令，征南长史，彭城、乐陵太守，魏郡西部都尉。曲周⑤民父病，以牛祷，县结正⑥，弃市⑦。矫曰：“此孝子也。”表赦之。迁魏郡太守，时系囚千数至有历年矫以为周有三典之制汉约三章之法今惜轻重之理而忽久系之患可谓谬矣。悉自览罪状，一时论决。大军东征，入为丞相长史。军还，复为魏郡，转西曹属。从征汉中，还为尚书。行前未到邺，太祖崩洛阳，群臣拘常，以为太子即位，当须诏命。矫曰：“王薨于外，天下惶惧。太子宜割哀即位，以系远近之望。且又爱子在侧，彼此生变，则社稷危矣。”即具官备礼，一日皆办。明旦，以王后令，策太子即位，大赦荡然。文帝曰：“陈季弼临大节，明略过人，信一时之俊杰也。”帝既践阼，转署吏部，封高陵亭侯，迁尚书令。明帝即位，进爵东乡侯，邑六百户。车驾尝卒至尚书门，矫跪问帝曰：“陛下欲何之？帝曰：“欲案行⑧文书耳。”矫曰：“此自臣职分，非陛下所宜临也。若臣不称其职，则请就黜退。陛下宜还。”帝惭，回车而反。其亮直如此。加侍中光禄大夫，迁司徒。景初元年薨，谥曰贞侯。</div>
+                    <div>臣亮言：先帝创业未半，而中道崩殂；今天下三分，益州疲敝，此诚危急存亡之秋也。然侍卫之臣，不懈于内；忠志之士，忘身于外者：盖追先帝之殊遇，欲报之于陛下也。诚宜开张圣听，以光先帝遗德，恢弘志士之气；不宜妄自菲薄，引喻失义，以塞忠谏之路也。
+
+　　宫中府中，俱为一体；陟罚臧否，不宜异同：若有作奸犯科，及为忠善者，宜付有司，论其刑赏，以昭陛下平明之治；不宜偏私，使内外异法也。侍中、侍郎郭攸之、费依、董允等，此皆良实，志虑忠纯，是以先帝简拔以遗陛下：愚以为宫中之事，事无大小，悉以咨之，然后施行，必得裨补阙漏，有所广益。将军向宠，性行淑均，晓畅军事，试用之于昔日，先帝称之曰“能”，是以众议举宠为督：愚以为营中之事，事无大小，悉以咨之，必能使行阵和穆，优劣得所也。亲贤臣，远小人，此先汉所以兴隆也；亲小人，远贤臣，此后汉所以倾颓也。先帝在时，每与臣论此事，未尝不叹息痛恨于桓、灵也！侍中、尚书、长史、参军，此悉贞亮死节之臣也，愿陛下亲之、信之，则汉室之隆，可计日而待也。
+
+　　臣本布衣，躬耕南阳，苟全性命于乱世，不求闻达于诸侯。先帝不以臣卑鄙，猥自枉屈，三顾臣于草庐之中，谘臣以当世之事，由是感激，遂许先帝以驱驰。后值倾覆，受任于败军之际，奉命于危难之间：尔来二十有一年矣。先帝知臣谨慎，故临崩寄臣以大事也。受命以来，夙夜忧虑，恐付托不效，以伤先帝之明；故五月渡泸，深入不毛。今南方已定，甲兵已足，当奖帅三军，北定中原，庶竭驽钝，攘除奸凶，兴复汉室，还于旧都：此臣所以报先帝而忠陛下之职分也。至于斟酌损益，进尽忠言，则攸之、依、允等之任也。
+
+　　愿陛下托臣以讨贼兴复之效，不效则治臣之罪，以告先帝之灵；若无兴复之言，则责攸之、依、允等之咎，以彰其慢。陛下亦宜自谋，以谘诹善道，察纳雅言，深追先帝遗诏。臣不胜受恩感激！今当远离，临表涕泣，不知所言。</div>
+                    <div>先帝虑汉贼不两立，王业不偏安，故托臣以讨贼也。以先帝之明，量臣之才，故知臣伐贼，才弱敌强也。然不伐贼，王业亦亡。惟坐而待亡，孰与伐之？是故托臣而弗疑也。
+
+　　臣受命之日，寝不安席，食不甘味；思惟北征，宜先入南：故五月渡泸，深入不毛，并日而食。——臣非不自惜也：顾王业不可偏安于蜀都，故冒危难以奉先帝之遗意。而议者谓为非计。今贼适疲于西，又务于东，兵法“乘劳”：此进趋之时也。谨陈其事如左：
+
+　　高帝明并日月，谋臣渊深，然涉险被创，危然后安；今陛下未及高帝，谋臣不如良、平，而欲以长策取胜，坐定天下：此臣之未解一也。
+
+　　刘繇、王朗，各据州郡，论安言计，动引圣人，群疑满腹，众难塞胸；今岁不战，明年不征，使孙策坐大，遂并江东：此臣之未解二也。
+
+　　曹操智计，殊绝于人，其用兵也，仿怫孙、吴，然困于南阳，险于乌巢，危于祁连，逼于黎阳，几败北山，殆死潼关，然后伪定一时耳；况臣才弱，而欲以不危而定之：此臣之未解三也。
+
+　　曹操五攻昌霸不下，四越巢湖不成，任用李服而李服图之，委任夏侯而夏侯败亡，先帝每称操为能，犹有此失；况臣弩下，何能必胜：此臣之未解四也。
+</div>
+                    <div> 陆逊字伯言，吴郡吴人也。孙权为将军，逊年二十一，始仕幕府，历东西曹令史，出为海昌屯田都尉，并领县事。县连年亢旱，逊开仓谷以振贫民，劝督农桑，百姓蒙赖。时吴、会稽、丹杨多有伏匿，逊陈便宜，乞与募焉。
+    会稽太守淳于式表逊枉取民人，愁扰所在。逊后诣都，言次，称式佳吏，权曰：“式白君而君荐之，何也？”逊对曰：“式意欲养民，是以白逊。若逊复毁式以乱圣听，不可长也。”权曰：“此诚长者之事，顾人不能为耳。”
+    黄武元年，刘备率大众来向西界，权命逊为大都督，督朱然、潘璋等五万人拒之。备从巫峡、建平连围至夷陵界，立数十屯，以金锦爵赏诱动诸夷，使将军冯习为大督，张南为前部，辅匡、赵融等各为别督，先遣吴班将数千人于平地立营，欲以挑战。诸将皆欲击之，逊曰：“此必有谲，且观之。”备知其计不可，乃引伏兵八千，从谷中出。逊曰：“所以不听诸君击班者，揣之必有巧故也。”逊上疏欲击备。诸将并曰：“攻备当在初，今乃令入五六百里，相衔持经七八月，其诸要害皆以固守，击之必无利矣。”逊曰：“备是猾虏，更尝事多，其军始集，思虑精专，未可干也。今住已久，不得我便，兵疲意沮，计不复生，犄角此寇，正在今日。”乃先攻一营，不利。诸将皆曰：“空杀兵耳。”逊曰：“吾已晓破之之术。”乃敕各持一把茅，以火攻拔之。一尔势成，通率诸军同时俱攻，斩张南、冯习等首，破其四十馀营。备将杜路、刘宁等穷逼请降。备升马鞍山，陈兵自绕。逊督促诸军四面蹙之，土崩瓦解，死者万数。备因夜遁，驿人断后，仅得入白帝城。其舟船器械，水步军资，一时略尽，尸骸漂流，塞江而下。备大惭恚，曰：“吾乃为逊所折辱，岂非天邪！”
+    初，孙桓别讨备前锋於夷道，为备所围，求救於逊。逊曰：“未可。”诸将曰：“孙安东公族，见围已困，奈何不救？”逊曰：“安东得士众心，城牢粮足，无可忧也。待吾计展，欲不救安东，安东自解。”及方略大施，备果奔溃。桓后见逊曰：“前实怨不见救，定至今日，乃知调度自有方耳。”</div>
+                    <div>华歆字子鱼，平原高唐人也。高唐为齐名都，衣冠（士大夫、士族）无不游行（游逛）市里。歆为吏，休沐（洗脸）出府，则归家阖（关闭）门。议论持平（议事论人秉持公正），终不毁伤（诋毁中伤）人。同郡陶丘洪亦知名，自以明见过歆。时王芬与豪杰谋废灵帝。芬阴（暗中）呼歆、洪共定计，洪欲行，歆止之曰：“夫废立大事，伊（伊尹）、霍（霍光）之所难。芬性疏（粗疏）而不武，此必无成。而祸将及族。子其无往!”拱从歆言而止。后芬果败，洪乃服。
+
+……东至徐州，诏即拜歆豫章太守，以（因）为政清静不烦（烦扰百姓），吏民感（感激）而爱（爱戴）之。孙策略地江东，歆知策善用兵，乃幅巾（穿好衣服、戴好帽子）奉迎。策以其长者，待以上宾之礼。后策死。太祖在官渡，表天子征歆。孙权欲不遣，歆谓权曰：“将军奉王命，始交好曹公，分义未固（稳固），使仆得为将军效心，岂不有益乎？今空（白白）留仆，是为养无用之物，非将军之良计也。”权悦，乃遣歆。宾客旧人送之者千余人，赠遗数百金。歆皆无所拒，密各题识（标记），至临去，悉聚诸物，谓诸宾客曰：“本无拒诸君之心，而（因而）所受遂多。念（考虑）单车远行，将以怀璧为罪，愿宾客为之计。”众乃各留所赠，而服其德。
+
+歆至，拜议郎，参司空军事，入为尚书，转侍中，代荀彧（yù）为尚书令。太祖征孙权，表歆为军师。魏国既建，为御史大夫。文帝即王位，拜相国，封安乐乡侯。及践阼（zuò，即登基称帝），改为司徒。歆素清贫，禄赐以振（通“赈”，赈济）施亲戚故人，家无担石（dàn，一石米）之储。公卿尝并赐没入生口（没收入官的女奴），唯歆出而嫁之。……
+
+黄初中，诏公卿举（推荐）独行君子，歆举管宁，帝以（用）安车征（征召）之。明帝即位，进封博平侯，增邑五百户，并前千三百户，转拜太尉。歆称病乞退，让位于宁。帝不许。……
+
+太和中，遣曹真从子午道伐蜀，车驾东幸（驾临）许昌。歆上疏曰：“……臣诚愿陛下先留心于治道（治理国家），以征伐为后事。且千里运粮，非用兵之利；越险深入，无独克（胜利）之功。如闻今年征役，颇失农桑之业。为国者以民为基（基础），民以衣食为本（根本）。使中国（中原）无饥寒之患，百姓无离土（背井离乡）之心，则天下幸甚。二贼之衅（挑衅），可坐而待也。……”帝报曰：“君深虑国计，朕甚嘉之。贼凭恃山川，二祖劳（操劳）于前世，犹不克（能够）平，朕岂敢自多（自赞），谓必灭之哉！诸将以为（认为）不一探取（攻取），无由（理由）自弊（损坏），是以（因此）观兵以（来）窥其衅。若天时未至，周武还师，乃（是）前事之鉴，朕敬（恭敬地）不忘所戒（劝诫）”。时秋大雨，诏真引军还。</div>
+                    <div>甘宁，字兴霸，少有气力，好游侠，招合轻薄少年，为之渠帅。群聚相随，挟持弓弩，负毦带铃，民闻铃声，即知是宁。人与相逢，及属城长吏，接待隆厚者乃与交欢；不尔，即放所将夺其资货。至二十余年，止不攻劫，颇读诸子，乃往依刘表，因居南阳，不见进用，后转托黄祖，祖又以凡人畜之。
+    于是归吴。周瑜、吕蒙皆共荐达，孙权加异。宁陈计曰：“今汉祚日微，曹操弥，终为篡盗。南荆之地，山陵形便，江川流通，诚是国之西势也。宁已观刘表，虑既不远，儿子又劣，非能承业传基者也。至尊当早规之，不可后操图之。图之之计，宜先取黄祖。至尊今往，其破可必。一破祖军，鼓行而西，西据楚关，大势弥广，即可渐规巴、蜀。”权深纳之。权遂西，果禽祖，尽获其士众。
+    后随鲁肃镇益阳，拒关羽。羽自择选锐士五千人，投县上流十余里浅濑，云欲夜涉渡。肃与诸将议。宁时有三百兵，乃曰：“可复以五百人益吾，吾往对之，保羽闻吾咳唾，不敢涉水，涉水即是吾禽。”肃便选千兵益宁，宁乃夜往。羽闻之，住不渡，而结柴营。权嘉宁功，拜西陵太守。后曹公出濡须，宁为前部督，受敕出斫敌前营。权特赐米酒众肴，宁乃料赐手下百余人食。食毕，宁先以银碗酌酒，自饮两碗，乃酌与其都督。都督伏，不肯时持。宁引白削置膝上，呵谓之曰：“卿见知于至尊，孰与甘宁？甘宁且不惜死，卿何以独惜死乎？”都督见宁色厉，即起拜持酒，通酌兵各一银碗。至更二时，衔枚出所敌。敌遂退。宁益贵重，增兵二千人。
+    宁厨下儿曾有过，走投吕蒙。蒙恐宁杀之，故不即还。后宁赍礼礼蒙母，乃出厨下儿还宁。宁许蒙不杀。斯须还船，缚置桑树，自挽弓射杀之。蒙大怒，击鼓会兵，欲就船攻宁。宁闻之，故卧不起。蒙母徒跣出谏蒙曰：“至尊待汝如骨肉，属汝以大事，何有以私怒而欲攻杀甘宁？宁死之日，纵至尊不问，汝是为臣下非法。”蒙闻母言即豁然意释自至宁船，笑呼之曰兴霸老母待卿食急上与蒙俱还见母欢宴竟日。</div>
+                    <div> ①吾粲字孔休，吴郡乌程人也。吴录曰：粲生数岁，孤城妪见之，谓其母曰：“是儿有卿相之骨。”孙河为县长，粲为小吏，河深奇之。河后为将军，得自选长吏，表粲为曲阿丞。迁为长史，治有名迹。虽起孤微，与同郡陆逊、卜静等比肩齐声矣。孙权为车骑将军，召为主簿，出为山阴令，还为参军校尉。
+    ②黄武元年，与吕范、贺齐等俱以舟师拒魏将曹休于洞口。值天大风，诸船绠绁①断绝，漂没著岸，为魏军所获，或覆没沈溺。其大船尚存者，水中生人皆攀缘号呼，他吏士恐船倾没，皆以戈矛撞击不受。粲与黄渊独令船人以承取之，左右以为船重必败。粲曰：“船败，当俱死耳！人穷，奈何弃之?”粲、渊所活者百余人。
+    ③还，迁会稽太守，召处士谢谭为功曹，谭以疾不诣，粲教曰：“夫应龙以屈伸为神，凤皇以嘉鸣为贵，何必隐形于天外，潜鳞于重渊者哉？”后数往请，谭卒欣然与谋。粲募合人众，拜昭义中郎将，与吕岱讨平山越，入为屯骑校尉、少府，迁太子太傅。
+    ④赤乌中，遭二宫之变，孙权欲废太子孙和，而立鲁王孙霸，朝中官员各执一方。粲抗言执正，明嫡庶之分，违忤孙权，欲使鲁王霸出驻夏口，遣霸之党人杨竺不得令在都邑。又数以消息语陆逊，逊时驻武昌，连表谏争。由此为霸、竺等所谮害，下狱诛。寿评曰：吾粲遭罹屯蹇，以正丧身，悲夫！ </div>
+                    <div>亮躬耕陇亩，好为《梁父吟》。身长八尺，每自比于管仲、乐毅，时人莫之许也。惟博陵崔州平、颍川徐庶元直与亮友善，谓为信然。
+时先主屯新野。徐庶见先主，先主器之，谓先主曰：“诸葛孔明者，卧龙也，将军岂愿见之乎？”先主曰：“君与俱来。”庶曰：“此人可就见，不可屈致也。将军宜枉驾顾之。”
+由是先主遂诣亮，凡三往，乃见。因屏人曰：“汉室倾颓，奸臣窃命，主上蒙尘。孤不度德量力，欲信大义于天下；而智术浅短，遂用猖蹶，至于今日。然志犹未已，君谓计将安出？”
+亮答曰：“自董卓已来，豪杰并起，跨州连郡者不可胜数。曹操比于袁绍，则名微而众寡。然操遂能克绍，以弱为强者，非惟天时，抑亦人谋也。今操已拥百万之众，挟天子而令诸侯，此诚不可与争锋。孙权据有江东，已历三世，国险而民附，贤能为之用，此可以为援而不可图也。荆州北据汉、沔，利尽南海，东连吴会，西通巴蜀，此用武之国，而其主不能守，此殆天所以资将军，将军岂有意乎？益州险塞，沃野千里，天府之土，高祖因之以成帝业。刘璋暗弱，张鲁在北，民殷国富而不知存恤，智能之士思得明君。将军既帝室之胄，信义著于四海，总揽英雄，思贤如渴，若跨有 荆、益，保其岩阻，西和诸戎，南抚夷越，外结好孙权，内修政理；天下有变，则命一上将将荆州之军以向宛、洛，将军身率益州之众出于秦川，百姓孰敢不箪食壶浆，以迎将军者乎？诚如是，则霸业可成，汉室可兴矣。”
+先主曰：“善！”于是与亮情好日密。
+关羽、张飞等不悦，先主解之曰：“孤之有孔明，犹鱼之有水也。愿诸君勿复言。”羽、飞乃止。</div>
+                    <div>黄盖字公覆，零陵泉陵人也。故南阳太守黄子廉之后也，枝叶分离，自祖迁于零陵，遂家焉。盖少孤，婴丁凶难，辛苦备尝。然有壮志，虽处贫贱，不自同于凡庸，常以负薪余间，学书疏，讲兵事。初为郡吏，察孝廉，辟公府。孙坚举义兵，盖从之。坚南破山贼，北走董卓，拜盖别部司马。坚薨，盖随策及权，擐甲周旋，蹈 刃屠城。
+诸山越不宾，有寇难之县，辄用盖为守长。石城县吏，特难检御，盖乃署两掾，分主诸曹。教曰：“令长不德，徒以武功为官，不以文吏为称。今贼寇未平 ，有军旅之务，一以文书委付两掾，当检摄诸曹，纠擿①谬误。两掾所署，事入诺出，若有奸欺，终不加以鞭杖，宜各尽心，无为众先。”初皆怖威，夙夜恭职；久之，吏以盖不视文书，渐容人事。盖亦嫌外懈怠，时有所省，各得两掾不奉法数事。乃悉请诸掾吏，赐酒食，因出事诘问。两掾辞屈，皆叩头谢罪。盖曰：“前已相敕，终不以鞭杖相加，非相欺也。”遂杀之。县中震栗。后转春谷长，寻阳令。凡守九县，所在平定。迁丹杨都尉，抑强扶弱，山越怀附。
+    盖姿貌严毅，善于养众，每所征讨，士卒皆争为先。建安中，随周瑜拒曹公于赤壁，建策火攻，赤壁之役，盖为流矢所中，时寒堕水，为吴军人所得，不知其盖也，置厕②床中。盖自强以一声呼韩当，当闻之 ，曰：“此公覆声也。”向之垂涕，解易其衣，遂以得生。拜武锋中郎将。武陵蛮 夷反乱，攻守城邑，乃以盖领太守。时郡兵才五百人，自以不敌，因开城门，贼半入，乃击之，斩首数百，余皆奔走，尽归邑落。诛讨魁帅，附从者赦之。自春讫夏，寇乱尽平，诸幽邃巴、醴、由、诞邑侯君长，皆改操易节，奉礼请见，郡境遂清。后长沙益阳县为山贼所攻，盖又平讨。加偏将军，病卒于官。
+    盖当官决断，事无留滞，国人思之。又图画盖形，四时祠祭。及权践阼，追论其功，赐子柄爵关内侯。  （选自《三国志 吴书十》）</div>
+                    <div>司马芝字子华，河内温人也。少为书生，避乱荆州，于鲁阳山遇贼，同行者皆弃老弱走，芝独坐守老母。贼至，以刃临芝，芝叩头曰：“母老，唯在诸君！”贼曰：“此孝子也，杀之不义。”遂得免害，以鹿车推载母。居南方十余年，躬耕守节。
+    太祖平荆州，以芝为菅①长。时天下草创，多不奉法。郡主簿刘节，旧族豪侠，宾客千余家，出为盗贼，入乱吏治。顷之，芝差节客王同等为兵，掾史据白：“节家前后未尝给徭，若至时藏匿，必为留负。”
+    芝不听，与节书曰：“君为大宗，加股肱郡，而宾客每不与役，既众庶怨望，或流声上闻。今调同等为兵，幸时发遣。”兵已集郡，而节藏同等，因令督邮以军兴诡责县，县掾史穷困，乞代同行。芝乃驰檄济南，具陈节罪。太守郝光素敬信芝，即以节代同行，青州号芝“以郡主簿为兵”。
+    迁广平令。征虏将军刘勋，贵宠骄豪，又芝故郡将，宾客子弟在界数犯法。勋与芝书，不著姓名，而多所属托，芝不报其书，一皆如法。后勋以不轨诛，交关者皆获罪，而芝以见称。
+    黄初中，入为河南尹，抑强扶弱，私请不行。会内官欲以事托芝，不敢发言，因芝妻伯父董昭。昭犹惮芝，不为通。
+    芝性亮直，不矜廉隅②。与宾客谈论，有不可意，便面折其短，退无异言。卒于官，家无余财，自魏迄今为河南尹者莫及芝。</div>
+                    <div>许褚字仲康，谯国谯人也。容貌雄毅，勇力绝人。汉末，聚少年及宗族数千家，共坚壁以御寇。时汝南葛陂贼万馀人攻褚壁，褚众少不敌，力战疲极。兵矢尽，乃令壁中男女，聚石如杅①斗者置四隅。褚飞石掷之，所值皆摧碎。贼不敢进。粮乏，伪与贼和，以牛与贼易食，贼来取牛，牛辄奔还。褚乃出阵前，一手曳牛尾，行百馀步。贼众惊，遂不敢取牛而走。由是淮、汝、陈、梁间，闻皆畏惮之。
+    太祖徇淮、汝，褚以众归太祖。太祖见而壮之曰：“此吾樊哙也。”即日拜都尉，引入宿卫。诸从褚侠客，皆以为虎士。从征张绣，先登，斩首万计，迁校尉。从讨袁绍于官渡。时常从士徐他等谋为逆，以褚常侍左右，惮之不敢发。伺褚休下日，他等怀刀入。褚至下舍心动，即还侍。他等不知，入帐见褚，大惊愕。他色变，褚觉之，即击杀他等。太祖益亲信之，出入同行，不离左右。从围邺，力战有功，赐爵关内侯。从讨韩遂、马超于潼关。太祖将北渡，临济河，先渡兵，独与褚及虎士百馀人留南岸断后。超将步骑万馀人，来奔太祖军，矢下如雨。褚白太祖，贼来多，今兵渡已尽，宜去，乃扶太祖上船。贼战急，军争济，船重欲没。褚斩攀船者，左手举马鞍蔽太祖。船工为流矢所中死，褚右手并溯船，仅乃得渡。是日，微褚几危。其后太祖与遂、超等单马会语，左右皆不得从，唯将褚。超负其力，阴欲前突太祖，素闻褚勇，疑从骑是褚。乃问太祖曰：“公有虎侯者安在？”太祖顾指褚，褚瞋目盼之。超不敢动，乃各罢。后数日会战，大破超等，褚身斩首级，迁武卫中郎将。武卫之号，自此始也。军中以褚力如虎而痴，故号曰虎痴；是以超问虎侯，至今下称焉，皆谓其姓名也。
+    褚性谨慎奉法，质重少言。征南将军②自荆州来朝谒，太祖未出，入与褚相见于殿外。仁呼褚入便坐语，褚曰：“王将出。”便还入殿，仁意忿之。或以责褚曰：“征南宗室重臣，降意呼君，君何故辞？”褚曰：“彼虽亲重，外籓也。褚备内臣，众谈足矣，入室何私乎？”太祖闻，愈爱待之，迁中坚将军。</div>
+    </div>
+                    <div id="pullUp">  
+                        <div class="pullUpIcon icon up"></div>  
+                        <div class="pullUpLabel">上拉显示更多...</div>  
+                    </div>  
+                </div>
+
+                <!-- Plugins> af.selectBox -->
+                <div title="af.selectBox插件" class="panel" id="webselect" scrolling="yes">
+                    <script>
+                        var init_select = function () {
+                            // $.selectBox.getOldSelects("selectTest");
+                            // $.selectBox.getOldSelects("selectTest2");
+                        };
+                        window.addEventListener("load", init_select, false);
+                    </script>在Android设备，这将改变选择框自定义控制在WebKit的CSS3 transform3D中修复一个bug。
+                    <br />
+                    <br />
+                    <div id="selectTest" style="-webkit-transform: translate3d(0, 0, 0)">
+                        <!-- content goes here-->
+                        <br>    <span>
+                                                    <select id="test" style="-webkit-appearance: listbox;">
+                                                        <option value="1">一</option>
+                                                        <option value="2">二</option>
+                                                        <option value="3">三</option>
+                                                    </select>
+                                                </span>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                    </div>
+                    <div id="selectTest2" style="position:relative;top:10;">    <span>
+                                                    <select id="test2">
+                                                        <option value="1">一</option>
+                                                        <option value="2">二</option>
+                                                        <option value="3">三</option>
+                                                        <option value="4">四</option>
+                                                        <option value="5">五</option>
+                                                        <option value="6">六</option>
+                                                        <option value="7">七</option>
+                                                        <option value="8">八</option>
+                                                        <option value="9">九</option>
+                                                        <option value="10">十</option>
+                                                    </select>
+                                                </span>
+
+                        <br>
+                        <br>
+                        <br>这是禁用的
+                        <br>    <span>
+                                                    <select id="test3" disabled>
+                                                        <option value="1">一</option>
+                                                        <option value="2">二</option>
+                                                        <option value="3">三</option>
+                                                        <option value="4">四</option>
+                                                        <option value="5">五</option>
+                                                        <option value="6">六</option>
+                                                        <option value="7">七</option>
+                                                        <option value="8">八</option>
+                                                        <option value="9">九</option>
+                                                        <option value="10">十</option>
+                                                    </select>
+                                                </span>
+
+                        <br>
+                        <br>
+                        <br>这是一个多选择框的测试
+                        <br>    <span>
+                                                    <select id="test4" multiple="multiple">
+                                                        <option value="1">一</option>
+                                                        <option value="2">二</option>
+                                                        <option value="3">三</option>
+                                                        <option value="4">四</option>
+                                                        <option value="5">五</option>
+                                                        <option value="6">六</option>
+                                                        <option value="7">七</option>
+                                                        <option value="8">八</option>
+                                                        <option value="9">九</option>
+                                                        <option value="10">十</option>
+                                                    </select>
+                                                </span>
+
+                    </div>
+                    <br/>
+                    <br/>我是酱油君，来占坑的
+                    <br>
+                    <br>我是酱油君，来占坑的
+                    <br>
+                    <br>我是酱油君，来占坑的
+                    <br>
+                    <br>
+                </div>
+                <!-- Plugins> af.passwordBox -->
+                <div title="af.passwordBox插件" class="panel" id="webpassword">
+                    <script>
+                        var pwFixer = new $.passwordBox();
+                        var init_password = function () {
+                            var succ = pwFixer.getOldPasswords("selectPassword");
+
+                            $("#showPassword").show();
+                        };
+                        window.addEventListener("load", init_password, false);
+
+                        var pwState = false;
+
+                        function ShowHidePW() {
+
+                            if (!pwState) {
+                                pwFixer.changePasswordVisiblity(1, "one");
+                                pwState = true;
+                            } else {
+                                pwFixer.changePasswordVisiblity(0, "one");
+                                pwState = false;
+                            }
+                        }
+                    </script>在Android设备上，这个替换密码框与自定义控件修复WebKit CSS3 transform3D bug。您还可以显示/隐藏密码。
+                    <br />
+                    <br />
+                    <div id="selectPassword" style=" -webkit-transform: translate3d(0, 0, 0)">  <span><input type="password" id="one" name="one" placeholder="请输入密码" style="width:200px;color:black;"></span>
+
+                        <br />  <span id="showPassword" style="display:none">
+                         <div class="input">
+                            <label>显示密码:</label><input type="checkbox" id="showpw" onClick="ShowHidePW()"> <label for="showpw" ></label></span>
+                        </div>
+
+                       
+
+                    </div>
+                </div>
+                <!-- Plugins> af.css3animate -->
+                <div title="af.css3animate插件" class="panel" id="webanimate" style="overflow:hidden;">
+                    <script>
+                        function moveOnce() {
+                            $("#animate").css3Animate({
+                                width: "100px",
+                                height: "100px",
+                                x: "20%",
+                                y: "30%",
+                                time: "1000ms",
+                                opacity: .5,
+                                callback: function () {
+                                    reset()
+                                }
+                            });
+                        }
+
+                        function reset() {
+                            $("#animate").css3Animate({
+                                y: 0,
+                                x: 0,
+                                opacity: 1,
+                                width: "50px",
+                                height: "50px",
+                                time: "0ms"
+                            });
+                        }
+
+                        function moveTwice() {
+                            $("#animate").css3Animate({
+                                x: 20,
+                                y: 30,
+                                time: "300ms",
+                                callback: function () {
+                                    window.setTimeout(function () {
+                                        $("#animate").css3Animate({
+                                            x: 20,
+                                            y: 30,
+                                            time: "500ms",
+                                            previous: true,
+                                            callback: function () {
+                                                reset();
+                                            }
+                                        });
+                                    }, 300);
+
+                                }
+                            });
+                        }
+
+                        function animQueue() {
+                            var tmp = new $.css3AnimateQueue();
+                            tmp.push({
+                                id: "animate",
+                                x: 20,
+                                y: 30,
+                                time: "300ms"
+                            });
+                            tmp.push({
+                                id: "animate",
+                                x: 20,
+                                y: 30,
+                                time: "500ms",
+                                previous: true
+                            });
+                            tmp.push({
+                                id: "animate",
+                                x: 0,
+                                y: 0,
+                                time: "0ms"
+                            });
+                            tmp.push({
+                                id: "animate",
+                                x: 20,
+                                y: 30,
+                                time: "300ms"
+                            });
+                            tmp.push({
+                                id: "animate",
+                                x: 20,
+                                y: 30,
+                                time: "500ms",
+                                previous: true
+                            });
+                            tmp.push(function () {
+                                reset()
+                            });
+                            tmp.run();
+                        }
+                    </script>
+                    <a class="button"  onClick="moveOnce()">移动一次</a>|
+                    <a class="button"  onClick="moveTwice()">移动两次</a>|
+                    <a class="button"  onClick="animQueue()">队列</a>
+                    <br />
+                    <div id="animate" style="width: 50px; height: 50px; border: 1px solid black; background: red"></div>
+                </div>
+                <!-- ------------------------------------------ -->
+                <!-- Plugins> afActionSheet -->
+                <div title="af.actionsheet插件" class="panel" id="webactionsheet">
+                    <script>
+                        function showCustomHtmlSheet() {
+                            $("#afui").actionsheet('<a  >返回</a><a  onclick="alert(\'嗨\');" >嗨</a><a  onclick="alert(\'再见\');">再见</a>');
+                        }
+
+                        function showCustomJsonSheet() {
+                            $("#afui").actionsheet(
+                            [{
+                                text: '后退',
+                                cssClasses: 'red',
+                                handler: function () {
+                                    $.ui.goBack();
+                                }
+                            }, {
+                                text: '嗨',
+                                cssClasses: 'blue',
+                                handler: function () {
+                                    alert("嗨");
+                                }
+                            }, {
+                                text: '再见',
+                                cssClasses: '',
+                                handler: function () {
+                                    alert("再见");
+                                }
+                            }]);
+                        }
+                    </script>这将从底部创建一个浮动显示层。
+                    <br />
+                    <br />
+                    <a class="button"  onClick="showCustomHtmlSheet()">显示定制的Html表</a>
+                    <a class="button"  onClick="showCustomJsonSheet()">显示定制的Json表</a>
+                </div>
+                <div title="af.popup插件" class="panel" id="webpopup">
+                    <script>
+                        function showPopup1() {
+                            $("#afui").popup("我是一个警告框");
+                        }
+
+                        function showPopup2() {
+                            $("#afui").popup({
+                                title: "啊！啊！",
+                                message: "我是酱油君，专业酱油二十年，打得一手好酱油",
+                                cancelText: "关闭窗口",
+                                cancelCallback: function () {
+                                    console.log("取消");
+                                },
+                                doneText: "哟!",
+                                doneCallback: function () {
+                                    console.log("不错哦，我看好你哦!");
+                                },
+                                cancelOnly: false
+                            });
+                        }
+
+                        function showPopup3() {
+                            $("#afui").popup({
+                                title: "用户登录",
+                                message: "账号: <input type='text' class='af-ui-forms'><br>密码: <input type='text' class='af-ui-forms' style='webkit-text-security:disc'>",
+                                cancelText: "取消",
+                                cancelCallback: function () {},
+                                doneText: "登录",
+                                doneCallback: function () {
+                                    alert("登录测试")
+                                },
+                                cancelOnly: false
+                            });
+                        }
+                    </script>这将创建一个弹出对话框与用户交互。你可以在一个HTML字符串中传递，它的作用（取代）警告对话框。你也可以传递一个对象，以获得更多的相互作用。
+                    <br>
+                    <br>
+                    <a class="button" onClick="showPopup1()">单击弹出警告框</a>
+                    <br>
+                    <a class="button" onClick="showPopup2()">单击弹出提示框</a>
+                    <br>
+                    <a class="button" onClick="showPopup3()">自定义HTML窗口</a>
+                    <br>
+                </div>
+                <div class="panel" title="触屏事件" id="touchevents">
+                <script>
+                $(document).ready(function(){
+                    $("#taptest").bind("tap",function(){
+                        alert("激活了tap事件");
+                    })
+                    $("#singletaptest").bind("singleTap",function(){
+                        alert("激活了singleTap事件");
+                    })
+                    $("#longtaptest").bind("longTap",function(){
+                        alert("激活了longTap事件");
+                    })
+                    $("#doubletaptest").bind("doubleTap",function(){
+                        alert("激活了doubleTap事件");
+                    })
+                    $("#swipetest").bind("swipe",function(){
+                        alert("激活了swipe事件");
+                    })
+                });
+                </script>
+                    <h2>触屏事件</h2>
+
+                    <ul class="list">
+                        <li><a id='taptest' >触碰测试</a></li>
+                        <li><a id='longtaptest' >长时间触碰测试</a></li>
+                        <li><a id='singletaptest' >单击触碰测试</a></li>
+                        <li><a id='doubletaptest' >双击触碰测试</a></li>
+                        <li><a id='swipetest' >滑动测试</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- ------------------------------------------ -->
+            <!-- navbar -->
+            
+            <div id="navbar">
+                <a href="#main/1/3" id='navbar_home' class='icon home'>首页 <span class='af-badge lr'>3</span></a><a href="#af" id='navbar_js' class="icon target">选择器</a><a href="#afuidemo" id='navbar_ui' class="icon picture">界面</a><a href="#afweb" id='navbar_plugins' class="icon key">插件</a>
+            </div>
+        
+            <footer id='footerui'>
+                <a href="#main" id='navbar_home' class='icon home'>首页 <span class='af-badge lr'>6</span></a>
+                <a href="#aftransitions" id='navbar_js' class="icon stack">效果</a>
+                <a href="#afuidemo" id='navbar_ui' class="icon picture">界面</a>
+                <a href="#uiapi" id='navbar_plugins' class="icon info">API</a>
+            </footer>
+            <footer id='footerui2'>
+                <a href="#main" id='navbar_home' class='icon home'>首页 <span class='af-badge lr'>6</span></a>
+                <a href="#aftransitions" id='navbar_js' class="icon stack">效果</a>
+                <a href="#afuidemo" id='navbar_ui' class="icon picture">界面</a>
+                <a href="#uiapi" id='navbar_plugins' class="icon info">API</a>
+            </footer>
+            <footer id='footerui3'>
+                <a href="#main" id='navbar_home' class='icon home'>首页 <span class='af-badge lr'>600</span></a>
+            </footer>
+            <header id="testheader">
+                <a id="backButton" onclick="$.ui.goBack()" class='button'>后退</a>
+                    <h1>我是标题君</h1>
+                <a class="button icon settings" style="float:right">按钮</a>
+            </header>
+            <!-- ------------------------------------------ -->
+            <nav>
+                <ul class="list">
+                    <li class="divider" class="icon home">首页</li>
+                    <li>
+                        <a href="#af">选择器</a>
+                    </li>
+                 <li class="divider">界面</li>
+                    <li>
+                        <a href="#aftransitions">效果</a>
+                    </li>
+                    <li>
+                        <a href="#afuidemo">元素</a>
+                    </li>
+                    <li>
+                        <a href="#uiapi">API</a>
+                    </li>
+                 <li class="divider">插件</li>
+                    <li>
+                        <a href="#webslider">滚动插件</a>
+                    </li>
+                    <li>
+                        <a href="#webanimate">CSS3动画插件</a>
+                    </li>
+                     <li>
+                        <a href="#webactionsheet">浮动层显示插件</a>
+                    </li>
+
+                 <li class="divider">菜单</li>
+                    <li>
+                        <a  onclick="$.ui.toggleHeaderMenu();">切换显示页眉</a>
+                    </li>
+                    <li>
+                        <a  onclick="$.ui.toggleSideMenu()">切换显示侧边菜单</a>
+                    </li>
+                    <li>
+                        <a  onclick="$.ui.toggleNavMenu()">切换显示页脚</a>
+                    </li>
+                </ul>
+            </nav>
+            <nav id="menu_AppFramework" data-iscroll="true">
+                <div class="scroller">
+                    <ul class="list">
+                         <li class="divider">选择器</li>
+                        <li>
+                            <a href="#af1">$()</a>
+                        </li>
+                        <li>
+                            <a href="#af2">$().length()</a>
+                        </li>
+                        <li>
+                            <a href="#af3">$().find()</a>
+                        </li>
+                        <li>
+                            <a href="#af4">$().html()</a>
+                        </li>
+                        <li>
+                            <a href="#af5">$().text()</a>
+                        </li>
+                        <li>
+                            <a href="#af6">$().css()</a>
+                        </li>
+                        <li>
+                            <a href="#af7">$().empty()</a>
+                        </li>
+                        <li>
+                            <a href="#af8">$().hide()</a>
+                        </li>
+                        <li>
+                            <a href="#af9">$().show()</a>
+                        </li>
+                        <li>
+                            <a href="#af10">$().toggle()</a>
+                        </li>
+                        <li>
+                            <a href="#af11">$().val()</a>
+                        </li>
+                        <li>
+                            <a href="#af12">$().attr()</a>
+                        </li>
+                        <li>
+                            <a href="#af13">$().removeAttr()</a>
+                        </li>
+                        <li>
+                            <a href="#af14">$().remove()</a>
+                        </li>
+                        <li>
+                            <a href="#af15">$().addClass()</a>
+                        </li>
+                        <li>
+                            <a href="#af16">$().removeClass()</a>
+                        </li>
+                        <li>
+                            <a href="#af17">$().hasClass()</a>
+                        </li>
+                        <li>
+                            <a href="#af18">$().bind()</a>
+                        </li>
+                        <li>
+                            <a href="#af19">$().unbind()</a>
+                        </li>
+                        <li>
+                            <a href="#af20">$().trigger()</a>
+                        </li>
+                        <li>
+                            <a href="#af21">$().append()</a>
+                        </li>
+                        <li>
+                            <a href="#af22">$().prepend()</a>
+                        </li>
+                        <li>
+                            <a href="#af32">$().get(0)</a>
+                        </li>
+                        <li>
+                            <a href="#af31">$().offset()</a>
+                        </li>
+                        <li>
+                            <a href="#afparent">$().parent()</a>
+                        </li>
+                        <li>
+                            <a href="#af33">$().isArray()</a>
+                        </li>
+                        <li>
+                            <a href="#af34">$().isFunction()</a>
+                        </li>
+                        <li>
+                            <a href="#af23">$.jsonP()</a>
+                        </li>
+                        <li>
+                            <a href="#af24">$.ajax()</a>
+                        </li>
+                        <li>
+                            <a href="#af25">$.get(0)</a>
+                        </li>
+                        <li>
+                            <a href="#af26">$.post()</a>
+                        </li>
+                        <li>
+                            <a href="#af27">$.getJSON()</a>
+                        </li>
+                        <li>
+                            <a href="#af28">$.param()</a>
+                        </li>
+                        <li>
+                            <a href="#af29">$.parseJSON()</a>
+                        </li>
+                        <li>
+                            <a href="#af30">$.os</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <aside>
+                <br>我是右侧面板111。。<br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>我是右侧面板111。。
+                <br>我是右侧面板111。。
+                <br>我是右侧面板111。。<br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>我是右侧面板111。。
+                <br>我是右侧面板111。。
+                <br>我是右侧面板111。。
+                <br>我是右侧面板111。。<br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>我是右侧面板111。。
+                <br>我是右侧面板111。。<br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>我是右侧面板111。。
+                <br>我是右侧面板111。。<br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>我是右侧面板111。。
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>我是右侧面板111。。
+                <br>
+                <br>
+                <br>我是右侧面板111。。
+                <br>我是右侧面板111。。<br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>我是右侧面板111。。
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>我是右侧面板111。。
+            </aside>
+        </div>
+
+    </body>
+</html>
