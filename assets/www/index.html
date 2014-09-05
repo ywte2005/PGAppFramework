@@ -95,9 +95,10 @@
         <script type="text/javascript" charset="utf-8" src="./ui/transitions/slideDown.js"></script>
         <script type="text/javascript" charset="utf-8" src="./ui/transitions/slideUp.js"></script>
         <script type="text/javascript" charset="utf-8" src="./plugins/af.slidemenu.js"></script>
-        
+        <script type="text/javascript" charset="utf-8" src="./plugins/tmpl.js"></script>
 
         <script type="text/javascript">
+
             /* 这个函数在页面加载运行一次,未引入intel.xdk脚本情况下 */
             //$.ui.animateHeaders=false;
              var search=document.location.search.toLowerCase().replace("?","");
@@ -167,60 +168,40 @@
             }  
 
             $.ui.ready(function(){
-                if($.ui.scrollingDivs[$.ui.activeDiv.id]){
-                    $.ui.scrollingDivs[$.ui.activeDiv.id].refresh();
-                }
+
                 (function(){
                     var PGAppFramework = {
                         api:'http://d.pugu.biz/api.html',
                         menu:function(){
                             var me = this;
                             me.jsonp({action:'menu'},function(result){
-                                var s = [];
-                                $.each(result,function(i,item){
-                                    var id = [item.id];
-                                    if(item.children){
-                                        $.each(item.children,function(k,children){
-                                            id.push(children.id);
-                                        });
-                                    }
-                                    s.push('<li class="divider'+(item.meta.icon?' icon '+item.meta.icon:'')+'" data-id="'+id.join(',')+'" data-alias="'+item.alias+'">'+item.name+'</li>');
-                                    if(item.children){
-                                        $.each(item.children,function(k,children){
-                                            s.push('<li'+(children.meta.icon?' class="icon '+children.meta.icon+'"':'')+' data-id="'+children.id+'" data-alias="'+children.alias+'">'+children.name+'</li>');
-                                        });
-                                    }
-                                });
-                                $('nav ul').empty().append(s.join('')).find('li').bind('click',function(){
+                                $('nav ul').append(tmpl('nav_tpl',{item:result})).find('li').bind('click',function(){
                                     var li = this;
-                                    me.jsonp({class:'YT_Article',action:'GetArticleCategorysLimit',param:[10,0,$(li).data('id')].join('|')},function(result){
-                                        var container = $('#'+$(li).data('alias')),title = '';
-                                        if(container.size() !== 0){
-                                            container.find('.'+container.get(0).id).remove();
-                                            if(result.length !== 0){
-                                                $.each(result,function(i,item){
-                                                    if(i === 0){
-                                                        title = $('[data-id="'+item.cateid+'"]').text();
-                                                    }
-                                                    var r = container.find('li').eq(0).clone();
-                                                    r.addClass(container.get(0).id).find('a').text(item.title).bind('click',function(){
-                                                        var sc = $('#show_content');
-                                                        sc.find('h2').text(item.title);
-                                                        sc.find('p').html(item.content).find('img').css({'max-width':'100%'});
-                                                        if($.ui.scrollingDivs[sc.get(0).id]){
-                                                            $.ui.scrollingDivs[sc.get(0).id].refresh();
-                                                        } 
-                                                        $.ui.loadContent('#show_content',false,false,"up");
-                                                        $.ui.setTitle(item.title);
-                                                    });
-                                                    container.find('ul').append(r.show()).show();
-                                                });
-                                                if($.ui.scrollingDivs[container.get(0).id]){
-                                                    $.ui.scrollingDivs[container.get(0).id].refresh();
-                                                } 
+                                    var id = $(li).data('id');
+                                    me.alias = $(li).data('alias');
+                                    me.jsonp({class:'YT_Article',action:'GetArticleCategorysLimit',param:[10,0,id].join('|')},function(result){
+                                        if(result.length !== 0){
+                                            //判断是否已经实例化iScroll，实例化后是存在滚动条div的
+                                            var container = null;
+                                            if($.ui.scrollingDivs[me.alias]){
+                                                container = $('#'+me.alias).find('div').eq(0);
+                                            }else{
+                                                container = $('#'+me.alias);
                                             }
-                                            $.ui.loadContent('#'+$(li).data('alias'),false,false,"up");
-                                            $.ui.setTitle(title);
+                                            if(container !== null){
+                                                container.empty().append(tmpl(me.alias+'_tpl',{item:result})).find('a').bind('click',function(){
+                                                    var data = result[$(this).data('id')];
+                                                    if($.ui.scrollingDivs.single){
+                                                        $('#single').find('div').eq(0).html(tmpl('single_tpl',data));
+                                                    }else{
+                                                        $('#single').html(tmpl('single_tpl',data));
+                                                    }
+                                                    $('#single').find('img').css({'max-width':'100%'});
+                                                    $.ui.loadContent('#single',false,false,"up");
+                                                    me.refresh();
+                                                });
+                                                $.ui.loadContent('#'+me.alias,false,false,"up");
+                                            }
                                         }
                                     });
                                 });
@@ -234,12 +215,19 @@
                                 url:url.join('?'),
                                 success:function(result){
                                     callback(result);
-                                    $.ui.hideMask();
+                                    me.refresh();
+                                }
+                            });
+                        },
+                        refresh:function(){
+                            setTimeout(function(){
+                                $.ui.hideMask();
+                                if($.ui.scrollingDivs[$.ui.activeDiv.id]){
+                                    $.ui.scrollingDivs[$.ui.activeDiv.id].refresh();
                                 }
                             });
                         },
                         start:function(){
-                            //栏目
                             this.menu();
                         }
                     };
@@ -265,7 +253,6 @@
             </div>
             <div id="content">
                 <div title='欢迎' id="main" class="panel" selected="true" data-load="loadedPanel" data-unload="unloadedPanel" data-tab="navbar_home">
-
                     <h2 class='expanded' onclick='showHide(this,"main_info");'>欢迎</h2>
 
                     <p id='main_info'>欢迎来到AppFramework框架演示。在这里你可以了解如何使用AppFramework框架的示例。请从下面选项中选择。</p>
@@ -301,66 +288,14 @@
 
                     </ul>
                 </div>
-                <div title="loading..." id="me" class="panel">
-                    <br />
-                    <ul class="list inset" style="display:none;">
-                        <li style="display:none;">
-                            <a href="#"></a>
-                        </li>
-                    </ul>
-                </div>
-                <div title="loading..." id="all" class="panel">
-                    <br />
-                    <ul class="list inset" style="display:none;">
-                        <li style="display:none;">
-                            <a href="#"></a>
-                        </li>
-                    </ul>
-                </div>
-                <div title="loading..." id="theme" class="panel">
-                    <br />
-                    <ul class="list inset" style="display:none;">
-                        <li style="display:none;">
-                            <a href="#"></a>
-                        </li>
-                    </ul>
-                </div>
-                <div title="loading..." id="plugin" class="panel">
-                    <br />
-                    <ul class="list inset" style="display:none;">
-                        <li style="display:none;">
-                            <a href="#"></a>
-                        </li>
-                    </ul>
-                </div>
-                <div title="loading..." id="demo" class="panel">
-                    <br />
-                    <ul class="list inset" style="display:none;">
-                        <li style="display:none;">
-                            <a href="#"></a>
-                        </li>
-                    </ul>
-                </div>
-                <div title="loading..." id="group" class="panel">
-                    <br />
-                    <ul class="list inset" style="display:none;">
-                        <li style="display:none;">
-                            <a href="#"></a>
-                        </li>
-                    </ul>
-                </div>
-                <div title="loading..." id="contribute" class="panel">
-                    <br />
-                    <ul class="list inset" style="display:none;">
-                        <li style="display:none;">
-                            <a href="#"></a>
-                        </li>
-                    </ul>
-                </div>
-                <div title="loading..." id="show_content" class="panel">
-                    <h2></h2>
-                    <p style="word-wrap:break-word;"></p>
-                </div>
+                <div id="me" class="panel"></div>
+                <div id="all" class="panel"></div>
+                <div id="theme" class="panel"></div>
+                <div id="plugin" class="panel"></div>
+                <div id="demo" class="panel"></div>
+                <div id="group" class="panel"></div>
+                <div id="contribute" class="panel"></div>
+                <div id="single" class="panel"></div>
                 <!---------------------------------------------->
                 <div title="AppFramework" id="af" class="panel" data-nav="menu_AppFramework" data-header="testheader">
                     <!-- <header><span>这是一个内联在板头。下面是内联页脚</span></header>-->
@@ -2428,45 +2363,9 @@
             </header>
             <!-- ------------------------------------------ -->
             <nav>
-                <ul class="list">
-                    <li class="divider" class="icon home">首页</li>
-                    <li>
-                        <a href="#af">选择器</a>
-                    </li>
-                 <li class="divider">界面</li>
-                    <li>
-                        <a href="#aftransitions">效果</a>
-                    </li>
-                    <li>
-                        <a href="#afuidemo">元素</a>
-                    </li>
-                    <li>
-                        <a href="#uiapi">API</a>
-                    </li>
-                 <li class="divider">插件</li>
-                    <li>
-                        <a href="#webslider">滚动插件</a>
-                    </li>
-                    <li>
-                        <a href="#webanimate">CSS3动画插件</a>
-                    </li>
-                     <li>
-                        <a href="#webactionsheet">浮动层显示插件</a>
-                    </li>
-
-                 <li class="divider">菜单</li>
-                    <li>
-                        <a  onclick="$.ui.toggleHeaderMenu();">切换显示页眉</a>
-                    </li>
-                    <li>
-                        <a  onclick="$.ui.toggleSideMenu()">切换显示侧边菜单</a>
-                    </li>
-                    <li>
-                        <a  onclick="$.ui.toggleNavMenu()">切换显示页脚</a>
-                    </li>
-                </ul>
+                <ul class="list"></ul>
             </nav>
-            <nav id="menu_AppFramework" data-iscroll="true">
+            <nav id="menu_AppFramework">
                 <div class="scroller">
                     <ul class="list">
                          <li class="divider">选择器</li>
@@ -2633,6 +2532,94 @@
                 <br>我是右侧面板111。。
             </aside>
         </div>
-
+    <script type="text/html" id="me_tpl">
+        <br />
+        <ul class="list inset">
+            <%for(i in item){%>
+            <li><a href="#" data-id="<%=i%>"><%=item[i].title%></a></li>
+            <%}%>
+        </ul>
+        <br />
+    </script>
+    <script type="text/html" id="all_tpl">
+        <br />
+        <ul class="list inset">
+            <%for(i in item){%>
+            <li><a href="#" data-id="<%=i%>"><%=item[i].title%></a></li>
+            <%}%>
+        </ul>
+        <br />
+    </script>
+    <script type="text/html" id="theme_tpl">
+        <br />
+        <ul class="list inset">
+            <%for(i in item){%>
+            <li><a href="#" data-id="<%=i%>"><%=item[i].title%></a></li>
+            <%}%>
+        </ul>
+        <br />
+    </script>
+    <script type="text/html" id="plugin_tpl">
+        <br />
+        <ul class="list inset">
+            <%for(i in item){%>
+            <li><a href="#" data-id="<%=i%>"><%=item[i].title%></a></li>
+            <%}%>
+        </ul>
+        <br />
+    </script>
+    <script type="text/html" id="demo_tpl">
+        <br />
+        <ul class="list inset">
+            <%for(i in item){%>
+            <li><a href="#" data-id="<%=i%>"><%=item[i].title%></a></li>
+            <%}%>
+        </ul>
+        <br />
+    </script>
+    <script type="text/html" id="group_tpl">
+        <br />
+        <ul class="list inset">
+            <%for(i in item){%>
+            <li><a href="#" data-id="<%=i%>"><%=item[i].title%></a></li>
+            <%}%>
+        </ul>
+        <br />
+    </script>
+    <script type="text/html" id="contribute_tpl">
+        <br />
+        <ul class="list inset">
+            <%for(i in item){%>
+            <li><a href="#" data-id="<%=i%>"><%=item[i].title%></a></li>
+            <%}%>
+        </ul>
+        <br />
+    </script>
+    <script type="text/html" id="single_tpl">
+        <br />
+        <h2><%=title%></h2>
+        <p style="word-wrap:break-word;"><%=content%></p>
+        <br />
+    </script>
+    <script type="text/html" id="nav_tpl">
+        <%for(i in item){%>
+        <%
+            var id = [item[i].id];
+            if(item[i].children){
+                for(k in item[i].children){
+                    id.push(item[i].children[k].id);
+                }
+            }
+        %>
+        <li class="divider<%=(item[i].meta.icon?' icon '+item[i].meta.icon:'')%>" class="icon home" data-id="<%=id.join(',')%>" data-alias="<%=item[i].alias%>"><%=item[i].name%></li>
+        <%if(item[i].children){%>
+            <%for(k in item[i].children){%>
+            <li<%=item[i].children[k].meta.icon?(' class="icon '+item[i].children[k].meta.icon+'"'):''%> data-id="<%=item[i].children[k].id%>" data-alias="<%=item[i].children[k].alias%>">
+                <%=item[i].children[k].name%>
+            </li>
+            <%}%>
+        <%}%>
+        <%}%>
+    </script> 
     </body>
 </html>

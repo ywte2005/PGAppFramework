@@ -1737,19 +1737,27 @@
                 $("#header #menubadge").css("float", "left");
             } else if (this.showBackButton && this.showBackbutton) this.setBackButtonVisibility(true);
             this.activeDiv = what;
-
-            if($(what).attr('data-iscroll') != 'false'){
-                if(!this.scrollingDivs[what.id]){
-                    $(what).wrapInner(document.createElement("div"));
-                    this.scrollingDivs[what.id] = new IScroll(what, {
-                        scrollbars: true,
-                        mouseWheel: true,
-                        interactiveScrollbars: true,
-                        shrinkScrollbars: 'scale',
-                        fadeScrollbars: true
-                    });
+            
+            var opt = {
+                scrollbars: true,
+                mouseWheel: true,
+                interactiveScrollbars: true,
+                shrinkScrollbars: 'scale',
+                fadeScrollbars: true
+            };
+            if($(what).attr('data-iscroll') != null){
+                var _opt = eval('('+$(what).attr('data-iscroll')+')');
+                if(_opt){
+                    $.extend(opt,_opt);
+                }else{
+                    opt = false;
                 }
             }
+            if(!this.scrollingDivs[what.id] && opt){
+                $(what).wrapInner(document.createElement("div"));
+                this.scrollingDivs[what.id] = new IScroll(what, opt);
+            }
+            
             if(this.scrollingDivs[what.id]){
                 this.scrollingDivs[what.id].refresh();
             }
