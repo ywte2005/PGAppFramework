@@ -196,9 +196,14 @@
                                                     }else{
                                                         $('#single').html(tmpl('single_tpl',data));
                                                     }
-                                                    $('#single').find('img').css({'max-width':'100%'});
                                                     $.ui.loadContent('#single',false,false,"up");
-                                                    me.refresh();
+                                                    if($('#single').find('img').size() !== 0){
+                                                        $('#single').find('img').css({'max-width':'100%'}).load(function(){
+                                                            me.refresh();
+                                                        });
+                                                    }else{
+                                                        me.refresh();
+                                                    }
                                                 });
                                                 $.ui.loadContent('#'+me.alias,false,false,"up");
                                             }
