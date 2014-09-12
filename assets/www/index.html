@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--HTML5 doctype-->
 <html>
 
@@ -46,7 +46,8 @@
       <link rel="stylesheet" type="text/css" href="plugins/css/af.actionsheet.css"  />
       <link rel="stylesheet" type="text/css" href="plugins/css/af.popup.css"  />
       <link rel="stylesheet" type="text/css" href="plugins/css/af.scroller.css"  />
-      <link rel="stylesheet" type="text/css" href="plugins/css/af.selectBox.css"  />        
+      <link rel="stylesheet" type="text/css" href="plugins/css/af.selectBox.css"  />
+      <link rel="stylesheet" type="text/css" href="plugins/css/Swipe.css"  />        
         
         <!-- 注释 intel.xdk 脚本 
         <script type="text/javascript" charset="utf-8" src="intelxdk.js"></script>
@@ -96,6 +97,7 @@
         <script type="text/javascript" charset="utf-8" src="./ui/transitions/slideUp.js"></script>
         <script type="text/javascript" charset="utf-8" src="./plugins/af.slidemenu.js"></script>
         <script type="text/javascript" charset="utf-8" src="./plugins/tmpl.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./plugins/Swipe.js"></script>
         <script type="text/javascript" charset="utf-8" src="./plugins/PGAppFramework.js"></script>
 
         <script type="text/javascript">
@@ -189,6 +191,7 @@
             </div>
             <div id="content">
                 <div title='欢迎' id="main" class="panel" selected="true" data-load="loadedPanel" data-unload="unloadedPanel" data-tab="navbar_home">
+
                     <h2 class='expanded' onclick='showHide(this,"main_info");'>欢迎</h2>
 
                     <p id='main_info'>欢迎来到AppFramework框架演示。在这里你可以了解如何使用AppFramework框架的示例。请从下面选项中选择。</p>
@@ -2557,5 +2560,16 @@
         <%}%>
         <%}%>
     </script> 
+    <script type="text/html" id="slider_tpl">
+      <div id="slider" class="swipe">
+        <div class="swipe-wrap">
+        <%for(i in item){%>
+            <div class="wrap">
+              <div class="image" style="background:url(<%=item[i].img%>) center no-repeat;background-size: cover"> </div>
+            </div>
+        <%}%>
+        </div>
+      </div>
+     </script> 
     </body>
 </html>

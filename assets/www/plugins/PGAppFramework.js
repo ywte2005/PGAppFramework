@@ -41,6 +41,45 @@
             });
         });
     };
+    PGAppFramework.slider = function(){
+        var me = this;
+        me.jsonp({class:'YT_Article',action:'GetArticleRandomSortNew',param:[5,'IMG'].join('|')},function(result){
+            if(result.length !== 0){
+                var data = [];
+                for(i in result){
+                    if($(result[i].content).find('img').size() !== 0){
+                        result[i]['img'] = $(result[i].content).find('img').eq(0).attr('src');
+                        data.push(result[i]);
+                    }
+                }
+                if($.ui.scrollingDivs.main){
+                    $('#main').find('div').eq(0).prepend(tmpl('slider_tpl',{item:data}));
+                }else{
+                    $('#main').prepend(tmpl('slider_tpl',{item:data}));
+                }
+                Swipe(document.getElementById('slider'), {
+                    auto: 3000,
+                    continuous: true,
+                    callback: function(pos) {
+                      // var i = bullets.length;
+                      // while (i--) {
+                      //   bullets[i].className = ' ';
+                      // }
+                      // bullets[pos].className = 'on';
+                    }
+                });
+                document.getElementById("slider").addEventListener('touchend',function(){
+                    $.ui.enableRightSideMenu();
+                    $.ui.enableSideMenu();
+                });
+                document.getElementById("slider").addEventListener('touchstart',function(){
+                    $.ui.disableRightSideMenu();
+                    $.ui.disableSideMenu();
+                });
+                me.refresh();
+            }
+        });
+    };
     PGAppFramework.jsonp = function(data,callback){
         $.ui.showMask('loading...');
         var me = this;
@@ -62,6 +101,7 @@
         });
     };
     PGAppFramework.start = function(){
+        this.slider();
         this.menu();
     };
 })();
