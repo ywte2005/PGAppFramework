@@ -1764,6 +1764,11 @@
             if (this.scrollingDivs[this.activeDiv.id]) {
                 this.scrollingDivs[this.activeDiv.id].enable();
             }
+            //如果存在data-css属性设置css为它
+            if($(this.activeDiv).data('css') != null){
+                var _css = eval('('+$(this.activeDiv).data('css')+')');
+                $(this.activeDiv).css(_css);
+            }
         },
         /**
          * This is called internally by loadContent.  Here we are using Ajax to fetch the data
@@ -2199,7 +2204,18 @@
 
                     that.launchCompleted = true;
                     //trigger ui ready
-                    $.query("#afui #splashscreen").remove();
+                    if(!$.ui.splashscreen){
+                        $.ui.splashscreen = 0;
+                    }
+                    setTimeout(function(){
+                        $.query("#afui #splashscreen").css3Animate({
+                            time: "1000ms",
+                            opacity: 0,
+                            success: function () {
+                                $.query("#afui #splashscreen").remove();
+                            }
+                        });
+                    },$.ui.splashscreen);
                     setTimeout(function(){
                         $(document).trigger("afui:ready");
                     });

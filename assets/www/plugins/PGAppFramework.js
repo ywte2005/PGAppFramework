@@ -57,22 +57,31 @@
                 }else{
                     $('#main').prepend(tmpl('slider_tpl',{item:data}));
                 }
-                Swipe(document.getElementById('slider'), {
+                var slider = document.getElementById("slider");
+                me.slider.titles = $('.titles').find('li').get();
+                me.slider.buttons = $('.buttons').find('li').get();
+                $(me.slider.titles).eq(0).addClass('on');
+                $(me.slider.buttons).eq(0).addClass('on');
+                Swipe(slider, {
                     auto: 3000,
                     continuous: true,
                     callback: function(pos) {
-                      // var i = bullets.length;
-                      // while (i--) {
-                      //   bullets[i].className = ' ';
-                      // }
-                      // bullets[pos].className = 'on';
+                      var i = me.slider.buttons.length;
+                      while (i--) {
+                        $(me.slider.titles[i]).removeAttr('class');
+                        $(me.slider.buttons[i]).removeAttr('class');
+                      }
+                      $(me.slider.titles[pos]).addClass('on');
+                      $(me.slider.buttons[pos]).addClass('on');
                     }
                 });
-                document.getElementById("slider").addEventListener('touchend',function(){
+                slider.addEventListener('touchend',function(){
+                    $.ui.scrollingDivs.main.enable();
                     $.ui.enableRightSideMenu();
                     $.ui.enableSideMenu();
                 });
-                document.getElementById("slider").addEventListener('touchstart',function(){
+                slider.addEventListener('touchstart',function(){
+                    $.ui.scrollingDivs.main.disable();
                     $.ui.disableRightSideMenu();
                     $.ui.disableSideMenu();
                 });
@@ -81,7 +90,9 @@
         });
     };
     PGAppFramework.jsonp = function(data,callback){
-        $.ui.showMask('loading...');
+        if($('#splashscreen').size() === 0){
+            $.ui.showMask('loading...');
+        }
         var me = this;
         var url = [me.api,$.param(data)];
         $.jsonP({

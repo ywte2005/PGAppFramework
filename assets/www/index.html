@@ -41,11 +41,9 @@
       <link rel="stylesheet" type="text/css" href="css/ios7.css"  />
       <link rel="stylesheet" type="text/css" href="css/tizen.css"  />
 
-      <link rel="stylesheet" type="text/css" href="css/b.css"  />
-        
       <link rel="stylesheet" type="text/css" href="plugins/css/af.actionsheet.css"  />
       <link rel="stylesheet" type="text/css" href="plugins/css/af.popup.css"  />
-      <link rel="stylesheet" type="text/css" href="plugins/css/af.scroller.css"  />
+<!--       <link rel="stylesheet" type="text/css" href="plugins/css/af.scroller.css"  /> -->
       <link rel="stylesheet" type="text/css" href="plugins/css/af.selectBox.css"  />
       <link rel="stylesheet" type="text/css" href="plugins/css/Swipe.css"  />        
         
@@ -81,7 +79,7 @@
         <script type="text/javascript" charset="utf-8" src="./plugins/af.actionsheet.js"></script>
         <script type="text/javascript" charset="utf-8" src="./plugins/af.css3animate.js"></script>
         <script type="text/javascript" charset="utf-8" src="./plugins/af.passwordBox.js"></script>
-        <script type="text/javascript" charset="utf-8" src="./build/iscroll.js"></script>
+        <script type="text/javascript" charset="utf-8" src="./plugins/iscroll-probe.js"></script>
         <script type="text/javascript" charset="utf-8" src="./plugins/af.selectBox.js"></script>
         <script type="text/javascript" charset="utf-8" src="./plugins/af.touchEvents.js"></script>
         <script type="text/javascript" charset="utf-8" src="./plugins/af.touchLayer.js"></script>
@@ -117,6 +115,7 @@
                 });
             }
             var webRoot = "./";
+            $.ui.splashscreen = 5000;
             // $.os.android=true;
             //$.ui.autoLaunch = false;
             $.ui.openLinksNewTab = false;
@@ -179,22 +178,19 @@
     <body>
         <div id="afui">
             <!-- 这里是初始化时看到的启动画面 -->
-            <div id="splashscreen" class='ui-loader heavy'>
-                AppFramework
+            <div id="splashscreen">
+                <img src="./css/image/splash.png" />
+                <!-- AppFramework
                 <br>
                 <br>    <span class='ui-icon ui-icon-loading spin'></span>
-                <h1>正在启动应用程序...</h1>
+                <h1>正在启动应用程序...</h1> -->
 
             </div>
             <div id="header">
                 <a id='menubadge' onclick='$.ui.toggleSideMenu()' class='menuButton'></a>                 
             </div>
             <div id="content">
-                <div title='欢迎' id="main" class="panel" selected="true" data-load="loadedPanel" data-unload="unloadedPanel" data-tab="navbar_home">
-
-                    <h2 class='expanded' onclick='showHide(this,"main_info");'>欢迎</h2>
-
-                    <p id='main_info'>欢迎来到AppFramework框架演示。在这里你可以了解如何使用AppFramework框架的示例。请从下面选项中选择。</p>
+                <div title='欢迎' id="main" class="panel" data-css="{padding:0}" selected="true" data-load="loadedPanel" data-unload="unloadedPanel" data-tab="navbar_home">
                     <ul class="list">
                         <li class='red'>
                             <a href="#af" id='aflink' class='icon home big'>选择器</a>
@@ -1745,7 +1741,6 @@
                             }    
                         }  
                     </style>
-                    <script src="./build/iscroll-probe.js" type="text/javascript"></script>
                     <script>
                             var myScroll;
                             var pullDownEl, pullDownL;
@@ -2568,6 +2563,20 @@
               <div class="image" style="background:url(<%=item[i].img%>) center no-repeat;background-size: cover"> </div>
             </div>
         <%}%>
+        </div>
+        <div class="titles">
+            <ul>
+            <%for(i in item){%>
+                <li data-ajax-id="<%=item[i].id%>"><%=item[i].title%></li>
+            <%}%>
+            </ul>
+        </div>
+        <div class="buttons">
+            <ul>
+            <%for(i in item){%>
+                <li data-ajax-id="<%=item[i].id%>"></li>
+            <%}%>
+            </ul>
         </div>
       </div>
      </script> 

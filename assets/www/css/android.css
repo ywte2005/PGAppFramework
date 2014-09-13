@@ -316,3 +316,62 @@
 #afui.android #af_actionsheet a.cancel{
     margin-bottom: 0px;
 }
+
+/* Styled scrollbars */
+
+#afui.android .iScrollHorizontalScrollbar {
+    position: absolute;
+    z-index: 9999;
+    height: 16px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    overflow: hidden;
+}
+
+#afui.android .iScrollHorizontalScrollbar.iScrollBothScrollbars {
+    right: 18px;
+}
+
+#afui.android .iScrollVerticalScrollbar {
+    position: absolute;
+    z-index: 9999;
+    width: 5px;
+    bottom: 2px;
+    top: 2px;
+    right: 2px;
+    overflow: hidden;
+}
+
+#afui.android .iScrollVerticalScrollbar.iScrollBothScrollbars {
+    bottom: 18px;
+}
+
+#afui.android .iScrollIndicator {
+    position: absolute;
+    background: rgba(0,0,0,0.5);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(200,200,200,0.5);
+    border-radius: 8px;
+}
+
+#afui.android .iScrollHorizontalScrollbar .iScrollIndicator {
+    height: 100%;
+    background: -moz-linear-gradient(left,  #141414 0%, #0C0C0C 100%);
+    background: -webkit-linear-gradient(left,  #141414 0%,#0C0C0C 100%);
+    background: -o-linear-gradient(left,  #141414 0%,#0C0C0C 100%);
+    background: -ms-linear-gradient(left,  #141414 0%,#0C0C0C 100%);
+    background: linear-gradient(to right,  #141414 0%,#0C0C0C 100%);
+}
+
+#afui.android .iScrollVerticalScrollbar .iScrollIndicator {
+    width: 100%;
+    background: -moz-linear-gradient(top, #141414 0%, #0C0C0C 100%);
+    background: -webkit-linear-gradient(top,  #141414 0%,#0C0C0C 100%);
+    background: -o-linear-gradient(top, #141414 0%,#0C0C0C 100%);
+    background: -ms-linear-gradient(top, #141414 0%,#0C0C0C 100%);
+    background: linear-gradient(to bottom,  #141414 0%,#0C0C0C 100%);
+}
+
+/* end */

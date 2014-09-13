@@ -130,7 +130,9 @@ body {
     z-index:9999;
     display:block;
     margin-left: auto !important; margin-right: auto !important;
-    padding-top:80px !important;
+}
+#afui > #splashscreen > img {
+    height:100%;
 }
 
 
