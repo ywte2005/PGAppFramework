@@ -23,7 +23,7 @@ body {
     color:#000;
     font-size:14px;
     display:-webkit-box;
-    background: #CBD2D8;
+    background: #000000;
     /* We want to layout our first container vertically */
     -webkit-box-orient: vertical;
     /* we want our child elements to stretch to fit the container */
@@ -132,6 +132,7 @@ body {
     margin-left: auto !important; margin-right: auto !important;
 }
 #afui > #splashscreen > img {
+    width:100%;
     height:100%;
 }
 
