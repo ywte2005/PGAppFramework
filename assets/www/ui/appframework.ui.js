@@ -2209,6 +2209,7 @@
                     }
                     setTimeout(function(){
                         $.query("#afui #splashscreen").css3Animate({
+                            //x:$('#splashscreen').width(),
                             time: "1000ms",
                             opacity: 0,
                             success: function () {

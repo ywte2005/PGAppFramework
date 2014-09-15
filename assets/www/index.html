@@ -34,12 +34,7 @@
       <link rel="stylesheet" type="text/css" href="css/badges.css"  />        
       <link rel="stylesheet" type="text/css" href="css/grid.css"  />
 
-      <link rel="stylesheet" type="text/css" href="css/android.css"  />
-      <link rel="stylesheet" type="text/css" href="css/win8.css"  />
-      <link rel="stylesheet" type="text/css" href="css/bb.css"  />
-      <link rel="stylesheet" type="text/css" href="css/ios.css"  />
       <link rel="stylesheet" type="text/css" href="css/ios7.css"  />
-      <link rel="stylesheet" type="text/css" href="css/tizen.css"  />
 
       <link rel="stylesheet" type="text/css" href="plugins/css/af.actionsheet.css"  />
       <link rel="stylesheet" type="text/css" href="plugins/css/af.popup.css"  />
@@ -99,48 +94,47 @@
         <script type="text/javascript" charset="utf-8" src="./plugins/PGAppFramework.js"></script>
 
         <script type="text/javascript">
-            /* 这个函数在页面加载运行一次,未引入intel.xdk脚本情况下 */
-            //$.ui.animateHeaders=false;
-             var search=document.location.search.toLowerCase().replace("?","");
-             //if(!search)
-            $.ui.useOSThemes=true;
-            if(search.length>0) //如果search参数存在则设置当前主题,否则使用默认皮肤
-            {
+            // /* 这个函数在页面加载运行一次,未引入intel.xdk脚本情况下 */
+            // //$.ui.animateHeaders=false;
+            //  var search=document.location.search.toLowerCase().replace("?","");
+            // $.ui.useOSThemes=true;
+            // if(search.length>0) //如果search参数存在则设置当前主题,否则使用默认皮肤
+            // {
 
-               $.ui.useOSThemes=true;
-                if(search=="win8")
-                    $.os.ie=true;
-                $.ui.ready(function(){
-                    $("#afui").get(0).className=search;
-                });
-            }
+            //    $.ui.useOSThemes=true;
+            //     if(search=="win8")
+            //         $.os.ie=true;
+            //     $.ui.ready(function(){
+            //         $("#afui").get(0).className=search;
+            //     });
+            // }
             var webRoot = "./";
             $.ui.splashscreen = 5000;
-            // $.os.android=true;
+            $.os.ios7=true;
             //$.ui.autoLaunch = false;
             $.ui.openLinksNewTab = false;
             $.ui.splitview=false;
             
 
-            $(document).ready(function(){
-                //如果直接刷新的容器非main,直接跳转至main容器
-                if(document.location.hash.length !== 0){
-                    document.location = document.location.href.replace(document.location.hash,'');
-                }
-                  // $.ui.launch();
+            // $(document).ready(function(){
+            //     //如果直接刷新的容器非main,直接跳转至main容器
+            //     if(document.location.hash.length !== 0){
+            //         document.location = document.location.href.replace(document.location.hash,'');
+            //     }
+            //       // $.ui.launch();
 
-            });
+            // });
             
             /* 这段是来运行intel.xdk的代码  */
-            var onDeviceReady = function () {
-                intel.xdk.device.setRotateOrientation("portrait");
-                intel.xdk.device.setAutoRotate(false);
-                webRoot = intel.xdk.webRoot + "";
-                //隐藏启动画面
-                intel.xdk.device.hideSplashScreen();
-                $.ui.blockPageScroll(); //阻止页面,滚动页眉/页脚
-            };
-            document.addEventListener("intel.xdk.device.ready", onDeviceReady, false);
+            // var onDeviceReady = function () {
+            //     intel.xdk.device.setRotateOrientation("portrait");
+            //     intel.xdk.device.setAutoRotate(false);
+            //     webRoot = intel.xdk.webRoot + "";
+            //     //隐藏启动画面
+            //     intel.xdk.device.hideSplashScreen();
+            //     $.ui.blockPageScroll(); //阻止页面,滚动页眉/页脚
+            // };
+            // document.addEventListener("intel.xdk.device.ready", onDeviceReady, false);
 
             function showHide(obj, objToHide) {
                 var el = $("#" + objToHide)[0];
@@ -155,18 +149,18 @@
             }
 
 
-            if($.os.android||$.os.ie||search=="android"){
-                $.ui.ready(function(){
-                    $("#main .list").append("<li><a id='toggleAndroidTheme'>切换主题颜色</a></li>");
-                    var $el=$("#afui");
-                    $("#toggleAndroidTheme").bind("click",function(e){
-                        if($el.hasClass("light"))
-                            $el.removeClass("light");
-                        else
-                            $el.addClass("light");
-                    });
-                });
-            }  
+            // if($.os.android||$.os.ie||search=="android"){
+            //     $.ui.ready(function(){
+            //         $("#main .list").append("<li><a id='toggleAndroidTheme'>切换主题颜色</a></li>");
+            //         var $el=$("#afui");
+            //         $("#toggleAndroidTheme").bind("click",function(e){
+            //             if($el.hasClass("light"))
+            //                 $el.removeClass("light");
+            //             else
+            //                 $el.addClass("light");
+            //         });
+            //     });
+            // }  
 
             $.ui.ready(function(){
                 PGAppFramework.start();
@@ -179,12 +173,8 @@
         <div id="afui">
             <!-- 这里是初始化时看到的启动画面 -->
             <div id="splashscreen">
+                <!-- spin -->
                 <img src="./css/image/splash.png" />
-                <!-- AppFramework
-                <br>
-                <br>    <span class='ui-icon ui-icon-loading spin'></span>
-                <h1>正在启动应用程序...</h1> -->
-
             </div>
             <div id="header">
                 <a id='menubadge' onclick='$.ui.toggleSideMenu()' class='menuButton'></a>                 
