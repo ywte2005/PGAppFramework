@@ -109,21 +109,21 @@
             //     });
             // }
             var webRoot = "./";
-            $.ui.splashscreen = 5000;
+            $.ui.splashscreen = 1000;
             $.os.ios7=true;
             //$.ui.autoLaunch = false;
             $.ui.openLinksNewTab = false;
             $.ui.splitview=false;
             
 
-            // $(document).ready(function(){
-            //     //如果直接刷新的容器非main,直接跳转至main容器
-            //     if(document.location.hash.length !== 0){
-            //         document.location = document.location.href.replace(document.location.hash,'');
-            //     }
-            //       // $.ui.launch();
+            $(document).ready(function(){
+                //因为锚点没有绑定数据,所以如果直接刷新的容器非#main,就跳转至#main容器
+                if(document.location.hash.length !== 0){
+                    document.location = document.location.href.replace(document.location.hash,'');
+                }
+                  // $.ui.launch();
 
-            // });
+            });
             
             /* 这段是来运行intel.xdk的代码  */
             // var onDeviceReady = function () {
@@ -2460,7 +2460,7 @@
         <br />
         <ul class="list inset">
             <%for(i in item){%>
-            <li><a href="#" data-id="<%=i%>"><%=item[i].title%></a></li>
+            <li data-ajax-id="<%=item[i].id%>"><%=item[i].title%></li>
             <%}%>
         </ul>
         <br />
@@ -2469,7 +2469,7 @@
         <br />
         <ul class="list inset">
             <%for(i in item){%>
-            <li><a href="#" data-id="<%=i%>"><%=item[i].title%></a></li>
+            <li data-ajax-id="<%=item[i].id%>"><%=item[i].title%></li>
             <%}%>
         </ul>
         <br />
@@ -2478,7 +2478,7 @@
         <br />
         <ul class="list inset">
             <%for(i in item){%>
-            <li><a href="#" data-id="<%=i%>"><%=item[i].title%></a></li>
+            <li data-ajax-id="<%=item[i].id%>"><%=item[i].title%></li>
             <%}%>
         </ul>
         <br />
@@ -2487,7 +2487,7 @@
         <br />
         <ul class="list inset">
             <%for(i in item){%>
-            <li><a href="#" data-id="<%=i%>"><%=item[i].title%></a></li>
+            <li data-ajax-id="<%=item[i].id%>"><%=item[i].title%></li>
             <%}%>
         </ul>
         <br />
@@ -2496,7 +2496,7 @@
         <br />
         <ul class="list inset">
             <%for(i in item){%>
-            <li><a href="#" data-id="<%=i%>"><%=item[i].title%></a></li>
+            <li data-ajax-id="<%=item[i].id%>"><%=item[i].title%></li>
             <%}%>
         </ul>
         <br />
@@ -2505,7 +2505,7 @@
         <br />
         <ul class="list inset">
             <%for(i in item){%>
-            <li><a href="#" data-id="<%=i%>"><%=item[i].title%></a></li>
+            <li data-ajax-id="<%=item[i].id%>"><%=item[i].title%></li>
             <%}%>
         </ul>
         <br />
@@ -2514,7 +2514,7 @@
         <br />
         <ul class="list inset">
             <%for(i in item){%>
-            <li><a href="#" data-id="<%=i%>"><%=item[i].title%></a></li>
+            <li data-ajax-id="<%=item[i].id%>"><%=item[i].title%></li>
             <%}%>
         </ul>
         <br />
@@ -2535,7 +2535,7 @@
                 }
             }
         %>
-        <li class="divider<%=(item[i].meta.icon?' icon '+item[i].meta.icon:'')%>" class="icon home" data-id="<%=id.join(',')%>" data-alias="<%=item[i].alias%>"><%=item[i].name%></li>
+        <li class="icon home divider<%=(item[i].meta.icon?' '+item[i].meta.icon:'')%>" data-id="<%=id.join(',')%>" data-alias="<%=item[i].alias%>"><%=item[i].name%></li>
         <%if(item[i].children){%>
             <%for(k in item[i].children){%>
             <li<%=item[i].children[k].meta.icon?(' class="icon '+item[i].children[k].meta.icon+'"'):''%> data-id="<%=item[i].children[k].id%>" data-alias="<%=item[i].children[k].alias%>">
@@ -2550,7 +2550,7 @@
         <div class="swipe-wrap">
         <%for(i in item){%>
             <div class="wrap">
-              <div class="image" style="background:url(<%=item[i].img%>) center no-repeat;background-size: cover"> </div>
+              <div class="image" data-ajax-id="<%=item[i].id%>" style="background:url(<%=item[i].img%>) center no-repeat;background-size: cover"> </div>
             </div>
         <%}%>
         </div>
