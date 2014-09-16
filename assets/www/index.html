@@ -4,18 +4,18 @@
 
     <head>
         <script>
-        (function() {
-    if ("-ms-user-select" in document.documentElement.style && navigator.userAgent.match(/IEMobile\/10\.0/)) {
-        var msViewportStyle = document.createElement("style");
-        msViewportStyle.appendChild(
-            document.createTextNode("@-ms-viewport{width:auto!important}")
-        );
-        document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
-    }
-})();
-</script>
+            (function() {
+                if ("-ms-user-select" in document.documentElement.style && navigator.userAgent.match(/IEMobile\/10\.0/)) {
+                    var msViewportStyle = document.createElement("style");
+                    msViewportStyle.appendChild(
+                        document.createTextNode("@-ms-viewport{width:auto!important}")
+                    );
+                    document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
+                }
+            })();
+        </script>
 
-        <title>App Framework Kitchen Sink</title>
+        <title>PG-Android</title>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,23 +50,23 @@
         <!-- 引入浏览器桌面处理脚本 af.desktopBrowsers.js -->
         <script>
 
-            function loadedPanel(what) {
-                //更新li的数量到badge显示
-                console.log("loaded " + what.id);
-                $.ui.updateBadge("#aflink", $("#af").find("li").length);
-            }
+            // function loadedPanel(what) {
+            //     //更新li的数量到badge显示
+            //     console.log("loaded " + what.id);
+            //     $.ui.updateBadge("#aflink", $("#af").find("li").length);
+            // }
 
 
-            function unloadedPanel(what) {
-                console.log("unloaded " + what.id);
-            }
+            // function unloadedPanel(what) {
+            //     console.log("unloaded " + what.id);
+            // }
 
-            if (!((window.DocumentTouch && document instanceof DocumentTouch) || 'ontouchstart' in window)) {
-                var script = document.createElement("script");
-                script.src = "plugins/af.desktopBrowsers.js";
-                var tag = $("head").append(script);
-                //$.os.desktop=true;
-            }
+            // if (!((window.DocumentTouch && document instanceof DocumentTouch) || 'ontouchstart' in window)) {
+            //     var script = document.createElement("script");
+            //     script.src = "plugins/af.desktopBrowsers.js";
+            //     var tag = $("head").append(script);
+            //     //$.os.desktop=true;
+            // }
 
           //  $.feat.nativeTouchScroll=true;
           
@@ -109,11 +109,11 @@
             //     });
             // }
             var webRoot = "./";
-            $.ui.splashscreen = 1000;
-            $.os.ios7=true;
+            $.ui.splashscreen = 3000;
+            $.os.ios7 = true;
             //$.ui.autoLaunch = false;
             $.ui.openLinksNewTab = false;
-            $.ui.splitview=false;
+            $.ui.splitview = false;
             
 
             $(document).ready(function(){
@@ -180,7 +180,7 @@
                 <a id='menubadge' onclick='$.ui.toggleSideMenu()' class='menuButton'></a>                 
             </div>
             <div id="content">
-                <div title='欢迎' id="main" class="panel" data-css="{padding:0}" selected="true" data-load="loadedPanel" data-unload="unloadedPanel" data-tab="navbar_home">
+                <div id="main" class="panel" data-css="{padding:0}" selected="true" data-tab="navbar_home">
                     <ul class="list">
                         <li class='red'>
                             <a href="#af" id='aflink' class='icon home big'>选择器</a>

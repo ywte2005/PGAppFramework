@@ -1,5 +1,6 @@
 (function(){
     window.PGAppFramework = {};
+    PGAppFramework.config = null;
     PGAppFramework.api = 'http://d.pugu.biz/api.html';
     PGAppFramework.menu = function(){
         var me = this;
@@ -8,6 +9,7 @@
                 var li = this;
                 var id = $(li).data('id');
                 me.alias = $(li).data('alias');
+                //$.ui.setTitle($(li).text());
                 me.jsonp({class:'YT_Article',action:'GetArticleCategorysLimit',param:[10,0,id].join('|')},function(result){
                     if(result.length !== 0){
                         //判断是否已经实例化iScroll，实例化后是存在滚动条div的
@@ -97,8 +99,19 @@
                 $.ui.scrollingDivs.single.refresh();
             }
         });
-    }
-    PGAppFramework.jsonp = function(data,callback){
+    };
+    PGAppFramework.system = function(){
+        var me = this;
+        var c = me.config;
+        //$.ui.setTitle(c.ZC_BLOG_NAME);
+        me.slider();
+        me.menu();
+    };
+    PGAppFramework.hideUI = function(){
+        $('#afui').hide();
+        $.ui.showMask('no network');
+    };
+    PGAppFramework.jsonp = function(data,callback,error){
         if($('#splashscreen').size() === 0){
             $.ui.showMask('loading...');
         }
@@ -109,6 +122,11 @@
             success:function(result){
                 callback(result);
                 me.refresh();
+            },
+            error:function(e){
+                if($.isFunction(error)){
+                    error(e);
+                }
             }
         });
     };
@@ -121,7 +139,14 @@
         });
     };
     PGAppFramework.start = function(){
-        this.slider();
-        this.menu();
+        var me = this;
+        me.jsonp({
+            action:'option'
+        },function(result){
+            me.config = result;
+            me.system();
+        },function(){
+            me.hideUI();
+        });
     };
 })();
