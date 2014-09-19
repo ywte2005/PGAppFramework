@@ -138,8 +138,14 @@
             }
         });
     };
+    PGAppFramework.mask = function(){
+        //spinner,spinner2,spinner3,spinner4,spinner5,spinner6,spinner7
+        $('#afui_mask').find('span').addClass('icon big icon-spinner5');
+        //$('#afui_mask').find('span').addClass('icon big icon-spinner5 spin2').removeClass('spin');
+    },
     PGAppFramework.start = function(){
         var me = this;
+        me.mask();
         me.jsonp({
             action:'option'
         },function(result){

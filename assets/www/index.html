@@ -122,7 +122,6 @@
                     document.location = document.location.href.replace(document.location.hash,'');
                 }
                   // $.ui.launch();
-
             });
             
             /* 这段是来运行intel.xdk的代码  */
@@ -164,6 +163,8 @@
 
             $.ui.ready(function(){
                 PGAppFramework.start();
+                //加载所有矢量图标
+                $('#uiicons').append(tmpl('icon_tpl',{item:document.styleSheets[0].rules}));
             });                
         </script>
 
@@ -174,10 +175,11 @@
             <!-- 这里是初始化时看到的启动画面 -->
             <div id="splashscreen">
                 <!-- spin -->
-                <img src="./css/image/splash.png" />
+                <img src="./splash.png" />
             </div>
             <div id="header">
-                <a id='menubadge' onclick='$.ui.toggleSideMenu()' class='menuButton'></a>                 
+                <a onclick='$.ui.toggleSideMenu()' class='button icon big icon-paragraph-justify2'></a>
+                <a onclick='$.ui.toggleAsideMenu()' class='button icon big icon-user3' style="float:right;"></a>
             </div>
             <div id="content">
                 <div id="main" class="panel" data-css="{padding:0}" selected="true" data-tab="navbar_home">
@@ -213,14 +215,14 @@
 
                     </ul>
                 </div>
-                <div id="me" class="panel"></div>
-                <div id="all" class="panel"></div>
-                <div id="theme" class="panel"></div>
-                <div id="plugin" class="panel"></div>
-                <div id="demo" class="panel"></div>
-                <div id="group" class="panel"></div>
-                <div id="contribute" class="panel"></div>
-                <div id="single" class="panel"></div>
+                <div id="me" class="panel" data-header="listHeader"></div>
+                <div id="all" class="panel" data-header="listHeader"></div>
+                <div id="theme" class="panel" data-header="listHeader"></div>
+                <div id="plugin" class="panel" data-header="listHeader"></div>
+                <div id="demo" class="panel" data-header="listHeader"></div>
+                <div id="group" class="panel" data-header="listHeader"></div>
+                <div id="contribute" class="panel" data-header="listHeader"></div>
+                <div id="single" class="panel" data-header="singleHeader"></div>
                 <!---------------------------------------------->
                 <div title="AppFramework" id="af" class="panel" data-nav="menu_AppFramework" data-header="testheader">
                     <!-- <header><span>这是一个内联在板头。下面是内联页脚</span></header>-->
@@ -853,189 +855,7 @@
                     </ul>
                 </div>
                 <div id="uiicons" title="矢量图标" class="panel">
-                        <h2 class='expanded' onclick='showHide(this,"icons_info");'>矢量图标</h2>
-                    <p id='icons_info'>App Framework UI 布置矢量图标在你的应用程序。简单地添加图标类,图像类名和其他你想要的尺寸。
-                        <br>.mini -  .7em
-                        <br>.big - 1.5em
-                        <br>默认是 1em
-                        <br>
-                    </p>
-                    <ul class="list">
-                        <li>
-                            <a  class="icon home">首页(home)</a>
-                        </li>
-                        <li>
-                            <a  class="icon home mini">迷你首页(home mini)</a>
-                        </li>
-                        <li>
-                            <a  class="icon pencil big">铅笔(pencil)</a>
-                        </li>
-                        <li>
-                            <a  class="icon picture big">图片(picture)</a>
-                        </li>
-                        <li>
-                            <a  class="icon camera big">相机(camera)</a>
-                        </li>
-                        <li>
-                            <a  class="icon headset big">耳机(headset)</a>
-                        </li>
-                        <li>
-                            <a  class="icon paper big">纸(paper)</a>
-                        </li>
-                        <li>
-                            <a  class="icon stack big">纸堆(stack)</a>
-                        </li>
-                        <li>
-                            <a  class="icon folder big">文件夹(folder)</a>
-                        </li>
-                        <li>
-                            <a  class="icon tag big">标签(tag)</a>
-                        </li>
-                        <li>
-                            <a  class="icon basket big">篮子(basket)</a>
-                        </li>
-                        <li>
-                            <a  class="icon phone big">电话(phone)</a>
-                        </li>
-                        <li>
-                            <a  class="icon mail big">邮件(mail)</a>
-                        </li>
-                        <li>
-                            <a  class="icon location big">位置(location)</a>
-                        </li>
-                        <li>
-                            <a  class="icon clock big">时钟(clock)</a>
-                        </li>
-                        <li>
-                            <a  class="icon calendar big">日历(calendar)</a>
-                        </li>
-                        <li>
-                            <a  class="icon message big">消息(message)</a>
-                        </li>
-                        <li>
-                            <a  class="icon chat big">聊天(chat)</a>
-                        </li>
-                        <li>
-                            <a  class="icon user big">用户(user)</a>
-                        </li>
-                        <li>
-                            <a  class="icon loading big">加载(loading)</a>
-                        </li>
-                        <li>
-                            <a  class="icon refresh big">刷新(refresh)</a>
-                        </li>
-                        <li>
-                            <a  class="icon magnifier big">放大镜(magnifier)</a>
-                        </li>
-                        <li>
-                            <a  class="icon key big">钥匙(key)</a>
-                        </li>
-                        <li>
-                            <a  class="icon settings big">设置(settings)</a>
-                        </li>
-                        <li>
-                            <a  class="icon graph big">曲线图(graph)</a>
-                        </li>
-                        <li>
-                            <a  class="icon trash big">回收站(trash)</a>
-                        </li>
-                        <li>
-                            <a  class="icon pin big">图钉(pin)</a>
-                        </li>
-                        <li>
-                            <a  class="icon target big">靶子(target)</a>
-                        </li>
-                        <li>
-                            <a  class="icon download big">下载(download)</a>
-                        </li>
-                        <li>
-                            <a  class="icon upload big">上传(upload)</a>
-                        </li>
-                        <li>
-                            <a  class="icon star big">星形(star)</a>
-                        </li>
-                        <li>
-                            <a  class="icon heart big">心形(heart)</a>
-                        </li>
-                        <li>
-                            <a  class="icon warning big">警告(warning)</a>
-                        </li>
-                        <li>
-                            <a  class="icon add big">添加(add)</a>
-                        </li>
-                        <li>
-                            <a  class="icon remove big">移除(remove)</a>
-                        </li>
-                        <li>
-                            <a  class="icon question big">问题(question)</a>
-                        </li>
-                        <li>
-                            <a  class="icon info big">信息(info)</a>
-                        </li>
-                        <li>
-                            <a  class="icon error big">错误(error)</a>
-                        </li>
-                        <li>
-                            <a  class="icon check big">检查(check)</a>
-                        </li>
-                        <li>
-                            <a  class="icon minimize big">最小化(minimize)</a>
-                        </li>
-                        <li>
-                            <a  class="icon close big">关闭(close)</a>
-                        </li>
-                        <li>
-                            <a  class="icon up big">上(up)</a>
-                        </li>
-                        <li>
-                            <a  class="icon down big">下(down)</a>
-                        </li>
-                        <li>
-                            <a  class="icon left big">左(left)</a>
-                        </li>
-                        <li>
-                            <a  class="icon right big">右(right)</a>
-                        </li>
-                        <li>
-                            <a  class="icon tools big">工具(tools)</a>
-                        </li>
-                        <li>
-                            <a  class="icon html5 big">HTML5(html5)</a>
-                        </li>
-                        <li>
-                            <a  class="icon css big">CSS(css)</a>
-                        </li>
-                        <li>
-                            <a  class="icon js big">JS(js)</a>
-                        </li>
-                        <li>
-                            <a  class="icon cloud big">云(cloud)</a>
-                        </li>
-                        <li>
-                            <a  class="icon tv big">电视(tv)</a>
-                        </li>
-                        <li>
-                            <a  class="icon wifi big">无线网络(wifi)</a>
-                        </li>
-                        <li>
-                            <a  class="icon new big">新(new)</a>
-                        </li>
-                        <li>
-                            <a  class="icon mic big">麦克风(mic)</a>
-                        </li>
-                        <li>
-                            <a  class="icon database big">数据库(database)</a>
-                        </li>
-                        <li>
-                            <a  class="icon busy big">繁忙(busy)</a>
-                        </li>
-                        <li>
-                            <a  class="icon bug big">调试(bug)</a>
-                        </li>
-                        <li>
-                            <a  class="icon lamp big">灯(lamp)</a>
-                        </li>
-                    </ul>
+                      
                 </div>
                 <div id="uidefer" title="延迟加载" class="panel" data-defer="defer.html">延迟加载Ajax工作需要一个web浏览器。我们做的是加载html $.ui之后,这可以帮助加快应用程序的加载时间。</div>
                 <div id="uiside" title="侧边菜单导航" class="panel" data-footer="footerui" data-nav='menu_AppFramework'> <b>侧边菜单导航</b>
@@ -2280,10 +2100,18 @@
             <footer id='footerui3'>
                 <a href="#main" id='navbar_home' class='icon home'>首页 <span class='af-badge lr'>600</span></a>
             </footer>
+            <header id="listHeader">
+                <a onclick='$.ui.goBack()' class='button icon big icon-undo2'></a>
+                <a onclick='$.ui.toggleSideMenu()' class='button icon big icon-paragraph-justify2' style="float:right;"></a>
+            </header>
+            <header id="singleHeader">
+                <a onclick="$.ui.goBack()" class='button icon big icon-undo2'></a>
+                <a class="button icon big icon-share" style="float:right"></a>
+            </header>
             <header id="testheader">
                 <a id="backButton" onclick="$.ui.goBack()" class='button'>后退</a>
                     <h1>我是标题君</h1>
-                <a class="button icon settings" style="float:right">按钮</a>
+                <a class="button icon big icon-share" style="float:right"></a>
             </header>
             <!-- ------------------------------------------ -->
             <nav>
@@ -2570,5 +2398,24 @@
         </div>
       </div>
      </script> 
+     <script type="text/html" id="icon_tpl">
+        <h2 class="expanded">矢量图标</h2>
+        <p id="icons_info">App Framework UI 布置矢量图标在你的应用程序。简单地添加图标类,图像类名和其他你想要的尺寸。
+            <br>.mini -  .7em
+            <br>.big - 1.5em
+            <br>默认是 1em
+            <br>
+        </p>
+        <ul class="list">
+              <%for(i in item){%>
+                <%var className = item[i].selectorText;%>
+                <%if(typeof(className) !== "undefined" && className.indexOf("icon-") !== -1){%>
+                    <li>
+                        <a  class="icon <%=className.replace('.','').replace('::before','')%> big"><%=className.replace('::before','')%></a>
+                    </li>
+                <%}%>
+              <%}%>
+        </ul>
+    </script> 
     </body>
 </html>
