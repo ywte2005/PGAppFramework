@@ -1742,7 +1742,6 @@
                 scrollbars: true,
                 mouseWheel: true,
                 interactiveScrollbars: true,
-                shrinkScrollbars: 'scale',
                 fadeScrollbars: true
             };
             if($(what).attr('data-iscroll') != null){
@@ -1750,7 +1749,7 @@
                 if(_opt){
                     $.extend(opt,_opt);
                 }else{
-                    opt = false;
+                    opt = _opt;
                 }
             }
             if(!this.scrollingDivs[what.id] && opt){
@@ -1979,7 +1978,6 @@
                     scrollbars: false,
                     mouseWheel: true,
                     interactiveScrollbars: true,
-                    shrinkScrollbars: 'scale',
                     fadeScrollbars: true
                 });
 
@@ -1996,7 +1994,6 @@
                     scrollbars: false,
                     mouseWheel: true,
                     interactiveScrollbars: true,
-                    shrinkScrollbars: 'scale',
                     fadeScrollbars: true
                 });
                 if ($.feat.nativeTouchScroll) $.query("#aside_menu_scroller").css("height", "100%");
@@ -2053,7 +2050,6 @@
                 scrollbars: true,
                 mouseWheel: true,
                 interactiveScrollbars: true,
-                shrinkScrollbars: 'scale',
                 fadeScrollbars: true
             });
             this.modalWindow = modalDiv;

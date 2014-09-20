@@ -444,3 +444,7 @@
 
 
 /* end */
+
+#afui.ios7 #aside_menu .login,#afui.ios7 #aside_menu .member {
+    padding:10px;
+}
