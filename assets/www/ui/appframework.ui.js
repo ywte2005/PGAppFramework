@@ -1739,7 +1739,7 @@
             this.activeDiv = what;
             
             var opt = {
-                scrollbars: true,
+                scrollbars: false,
                 mouseWheel: true,
                 interactiveScrollbars: true,
                 fadeScrollbars: true
@@ -2047,7 +2047,7 @@
             //console.log(modalDiv);
             $(modalDiv).wrapInner(document.createElement("div"));
             this.scrollingDivs.modal_container = new IScroll(modalDiv, {
-                scrollbars: true,
+                scrollbars: false,
                 mouseWheel: true,
                 interactiveScrollbars: true,
                 fadeScrollbars: true

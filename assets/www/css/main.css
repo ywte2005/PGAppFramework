@@ -471,7 +471,7 @@ body {
 
 .ui-loader { display: none; position: absolute; opacity: .85; z-index: 100; left: 50%; width: 200px; margin-left: -100px; margin-top: -35px; padding: 10px 30px; background: #666;background:rgba(0,0,0,.85);border-radius:9px;color:white;}
 .ui-loader.heavy {opacity:1;}
-.ui-loader h1 { font-size: 15px; text-align: center; }
+.ui-loader h1 { font-size: 15px; padding:5px; text-align: center; }
 .ui-loader .ui-icon { position: static; display: block; opacity: .9; margin: 0 auto; width: 42px; height: 41px; background-color: transparent; }
 
 .spin  {
@@ -673,43 +673,30 @@ body {
       }
 }
 
-.pullDown,.pullUp {    
-    height: 40px;    
-    line-height: 40px;    
-    padding: 5px 10px;    
-    font-weight: bold;    
-    font-size: 14px;    
-    color: #888;    
+.pullDown,.pullUp {  
+    position:relative;  
+    padding-left:25px; 
 }    
     
-.pullDown .pullDownIcon,.pullUp .pullUpIcon {    
-    display: block;    
-    width: 40px;    
-    height: 40px;     
-    -webkit-background-size: 40px 80px;    
-    background-size: 40px 80px;    
+.pullDown .pullDownIcon,.pullUp .pullUpIcon {
+    position:absolute;
+    left:0;
+    top:0;  
+    width: 14px;    
+    height: 14px;     
     -webkit-transition-property: -webkit-transform;    
-    -webkit-transition-duration: 250ms;    
+    -webkit-transition-duration: 1s;    
 }    
     
-.pullDown .pullDownIcon {    
-    -webkit-transform: rotate(0deg) translateZ(0);    
-}    
+.pullUp .pullUpIcon,.pullDown .pullDownIcon {    
+    -webkit-transform: scale(0) rotate(0deg) translateZ(0);    
+}
     
-.pullUp .pullUpIcon {    
-    -webkit-transform: rotate(-180deg) translateZ(0);    
-}    
-    
-.pullDown.flip .pullDownIcon {    
-    -webkit-transform: rotate(-180deg) translateZ(0);    
-}    
-    
-.pullUp.flip .pullUpIcon {    
-    -webkit-transform: rotate(0deg) translateZ(0);    
-}    
+.pullUp.flip .pullUpIcon,.pullDown.flip .pullDownIcon {    
+    -webkit-transform: scale(1) rotate(-360deg) translateZ(0);    
+}
     
 .pullDown.loading .pullDownIcon,.pullUp.loading .pullUpIcon {    
-    background-position: 0 100%;    
     -webkit-transform: rotate(0deg) translateZ(0);    
     -webkit-transition-duration: 0ms;    
     -webkit-animation-name: loading;    
@@ -718,12 +705,7 @@ body {
     -webkit-animation-timing-function: linear;    
 }    
     
-.-webkit-keyframes loading {    
-    from {     
-        -webkit-transform:rotate(0deg)translateZ(0);    
-    }    
-    
-    .to {    
-        -webkit-transform: rotate(360deg) translateZ(0);    
-    }    
+@-webkit-keyframes loading {    
+    from {-webkit-transform:rotate(0deg)translateZ(0);} 
+    to {-webkit-transform: rotate(360deg) translateZ(0);}    
 }  

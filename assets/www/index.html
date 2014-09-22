@@ -163,7 +163,11 @@
             $.ui.ready(function(){
                 PGAppFramework.start();
                 //加载所有矢量图标
-                $('#uiicons').append(tmpl('icon_tpl',{item:document.styleSheets[0].rules}));
+                //$('#uiicons').append(tmpl('icon_tpl',{item:document.styleSheets[0].rules}));
+                // setTimeout(function(){
+                //     $('#main').find('div').eq(0).append(tmpl('icon_tpl',{item:document.styleSheets[0].rules}));
+                //     $.ui.scrollingDivs.main.refresh();
+                // },2000);
                 //隐藏footer
                 $.ui.removeFooterMenu();
                 $("#afui").get(0).className = 'ios7';
@@ -184,7 +188,7 @@
             </div>
             <div id="content">
                 <div id="main" class="panel" data-css="{padding:0}" selected="true" data-iscroll="{probeType:2}" data-tab="navbar_home">
-                    <ul class="list"></ul>
+                    <div class="content"></div>
                 </div>
                 <div id="single" class="panel" data-header="singleHeader">
                 </div>
@@ -2140,9 +2144,11 @@
             </aside>
         </div>
     <script type="text/html" id="main_tpl">
-        <%for(i in item){%>
-        <li data-ajax-id="<%=item[i].id%>"><%=item[i].title%></li>
-        <%}%>
+        <ul class="list">
+            <%for(i in item){%>
+            <li data-ajax-id="<%=item[i].id%>"><%=item[i].title%></li>
+            <%}%>
+        </ul>
     </script>
     <script type="text/html" id="me_tpl">
         <br />
